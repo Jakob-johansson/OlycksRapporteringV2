@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OlycksRapporteringV2.MAUI.Views.LoginPage"
+             Title="LoginPage">
+    <VerticalStackLayout>
+        <Label 
+        Text="Logga in som anställd"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
+        <VerticalStackLayout Padding="30">
+
+
+
+
+            <Entry
+    Placeholder="Anställnings ID"
+    Text="{Binding EmployeeId}" />
+
+            <Entry
+    Placeholder="Lösenord"
+    IsPassword="True"
+    Text="{Binding Password}" />
+
+            <Button
+    Text="Logga in"
+    Command="{Binding LoginCommand}"
+            />
+
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

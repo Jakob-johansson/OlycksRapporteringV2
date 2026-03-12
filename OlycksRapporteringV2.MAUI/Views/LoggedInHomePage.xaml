@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OlycksRapporteringV2.MAUI.Views.LoggedInHomePage"
+             Title="LoggedInHomePage">
+    <VerticalStackLayout>
+        <Label 
+        Text="Välkommen!" 
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
+        <Label 
+        Text="Vänligen välj ett av alternativen nedan"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"/>
+
+        <Button 
+        Text="Skapa ny rapport"
+        Clicked="OnClickedGoToCreateReportPage"/>
+        <Button 
+        Text="Hantera rapporter"
+        Clicked="OnClickedGoToManageReportPage"/>
+        <Button 
+        Text="Meddelanden"
+        Clicked="OnClickedGoToNotificationsPage"/>
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OlycksRapporteringV2.MAUI.Views.CreateReportPage"
+             Title="Skapa Rapport">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20" HorizontalOptions="Start">
+
+            <!-- Header -->
+            <Label Text="Skapa rapport"
+                FontSize="32"
+                FontAttributes="Bold"
+                HorizontalOptions="Start"/>
+
+            <!-- Grundläggande info -->
+            <Label Text="Grundläggande information" 
+                FontSize="20" 
+                FontAttributes="Bold"
+                HorizontalOptions="Start"/>
+
+            <Picker Title="Välj typ av olycka"
+                 ItemsSource="{Binding AccidentTypes}"
+                 SelectedItem="{Binding SelectedAccidentType}"
+                 WidthRequest="400"
+                 HorizontalOptions="Start"/>
+
+            <!-- Titel -->
+            <Entry Text="{Binding ReportTitle}" 
+                Placeholder="Rapport Titel"
+                WidthRequest="400"
+                HorizontalOptions="Start"/>
+
+            <!-- Beskrivning -->
+            <Editor Text="{Binding ReportDescription}" 
+                 Placeholder="Beskrivning..." 
+                 WidthRequest="400"
+                 HeightRequest="220"
+                 HorizontalOptions="Start"
+                 AutoSize="TextChanges"
+                 BackgroundColor="#F9F9F9"
+                 Margin="0,5"
+                 FontSize="16"/>
+
+            <Entry Text="{Binding PeopleInvolved}" 
+                Placeholder="Personer inblandade.."
+                WidthRequest="400"
+                HorizontalOptions="Start"/>
+
+            <Entry Text="{Binding Location}" 
+                Placeholder="Plats"
+                WidthRequest="400"
+                HorizontalOptions="Start"/>
+
+            <Entry Text="{Binding TimeOfAccident}" 
+                Placeholder="Tid vid olycka"
+                WidthRequest="400"
+                HorizontalOptions="Start"/>
+
+            <!-- Skador & åtgärder -->
+            <Label Text="Skador &amp; Åtgärder" 
+                FontSize="20" 
+                FontAttributes="Bold"
+                HorizontalOptions="Start"/>
+
+            <Frame BorderColor="LightGray" CornerRadius="10" Padding="10" WidthRequest="410" HorizontalOptions="Start">
+                <VerticalStackLayout Spacing="15">
+                    <Entry Text="{Binding MaterialDamage}" 
+                        Placeholder="Materiell skada..."
+                        WidthRequest="390"
+                        HorizontalOptions="Start"/>
+                    <Entry Text="{Binding ImmediateActions}" 
+                        Placeholder="Omedelbara åtgärder..."
+                        WidthRequest="390"
+                        HorizontalOptions="Start"/>
+                    <Entry Text="{Binding PreventiveActions}" 
+                        Placeholder="Förslagna förebyggande åtgärder..."
+                        WidthRequest="390"
+                        HorizontalOptions="Start"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Skicka-knappen -->
+            <Button Text="Skicka in rapport"
+                 Command="{Binding CreateReportCommand}"
+                 BackgroundColor="#007ACC"
+                 TextColor="White"
+                 FontAttributes="Bold"
+                 CornerRadius="10"
+                 HeightRequest="55"
+                 WidthRequest="240"
+                 HorizontalOptions="Start"
+                 Margin="0,10"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

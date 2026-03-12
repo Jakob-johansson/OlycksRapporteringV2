@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="OlycksRapporteringV2.Application/OlycksRapporteringV2.Application.csproj" />
+  <Project Path="OlycksRapporteringV2.Domain/OlycksRapporteringV2.Domain.csproj" />
+  <Project Path="OlycksRapporteringV2.Infrastructure/OlycksRapporteringV2.Infrastructure.csproj" />
+  <Project Path="OlycksRapporteringV2.MAUI/OlycksRapporteringV2.MAUI.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>
