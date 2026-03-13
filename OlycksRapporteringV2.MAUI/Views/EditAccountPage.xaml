@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OlycksRapporteringV2.MAUI.Views.EditAccountPage"
+             Title="EditAccountPage">
+
+
+
+    <ScrollView>
+        <VerticalStackLayout Padding="36,60,36,40" Spacing="0">
+
+            <!-- Tillbaka-knapp -->
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    HeightRequest="48"
+                    WidthRequest="130"
+                    HorizontalOptions="Start"
+                    Margin="0,0,0,24">
+                <Button Text="← Tillbaka"
+                        Clicked="OnBackClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#E83B3B"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        HeightRequest="48"
+                        CornerRadius="12"/>
+            </Border>
+
+            <!-- Ikon -->
+            <Border WidthRequest="80" HeightRequest="80" HorizontalOptions="Start" Margin="0,0,0,32"
+                    BackgroundColor="#E83B3B" StrokeShape="RoundRectangle 20" Stroke="Transparent">
+                <Label Text="✏️" FontSize="36" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+
+            <!-- Rubrik -->
+            <Label Text="Redigera&#10;konto" FontSize="42" FontAttributes="Bold"
+                   TextColor="#F0F0F0" LineHeight="1.1" Margin="0,0,0,16"/>
+
+            <!-- Dekorativ linje -->
+            <BoxView HeightRequest="3" WidthRequest="60" Color="#E83B3B"
+                     HorizontalOptions="Start" Margin="0,0,0,24"/>
+
+            <Label Text="Tryck på redigera-knappen för att ändra ett fält."
+                   FontSize="16" TextColor="#8A8F9E" LineHeight="1.6" Margin="0,0,0,40"/>
+
+            <!-- ═══ KONTODETALJER ═══ -->
+            <Label Text="KONTODETALJER" FontSize="11" FontAttributes="Bold"
+                   TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16"/>
+
+            <Border StrokeShape="RoundRectangle 14" Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27" Padding="20,8" Margin="0,0,0,24">
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Anställnings-ID -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <BoxView Grid.ColumnSpan="3" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="🪪" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Anställnings-ID" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding EmployeeId}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding EmployeeIdReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding EmployeeIdEditing}">
+                                <Entry Text="{Binding EmployeeId}" TextColor="#F0F0F0" BackgroundColor="Transparent"
+                                       FontSize="15" ReturnCommand="{Binding SaveEmployeeIdCommand}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditEmployeeIdClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Email -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <BoxView Grid.ColumnSpan="3" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="📧" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Email" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding Email}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding EmailReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding EmailEditing}">
+                                <Entry Text="{Binding Email}" TextColor="#F0F0F0" BackgroundColor="Transparent"
+                                       FontSize="15" Keyboard="Email" ReturnCommand="{Binding SaveEmailCommand}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditEmailClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Telefon -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <BoxView Grid.ColumnSpan="3" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="📱" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Telefonnummer" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding PhoneNumber}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding PhoneReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding PhoneEditing}">
+                                <Entry Text="{Binding PhoneNumber}" TextColor="#F0F0F0" BackgroundColor="Transparent"
+                                       FontSize="15" Keyboard="Telephone" ReturnCommand="{Binding SavePhoneCommand}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditPhoneClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Hemadress -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <BoxView Grid.ColumnSpan="3" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="🏠" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Hemadress" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding HomeAdress}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding HomeAdressReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding HomeAdressEditing}">
+                                <Entry Text="{Binding HomeAdress}" TextColor="#F0F0F0" BackgroundColor="Transparent"
+                                       FontSize="15" ReturnCommand="{Binding SaveHomeAdressCommand}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditHomeAdressClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Bank -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <BoxView Grid.ColumnSpan="3" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="🏦" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Bank" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding PersonalBank}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding PersonalBankReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding PersonalBankEditing}">
+                                <Entry Text="{Binding PersonalBank}" TextColor="#F0F0F0" BackgroundColor="Transparent"
+                                       FontSize="15" ReturnCommand="{Binding SavePersonalBankCommand}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditPersonalBankClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Försäkring -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="🛡️" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Försäkring" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding Insurance}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding InsuranceReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding InsuranceEditing}">
+                                <Entry Text="{Binding Insurance}" TextColor="#F0F0F0" BackgroundColor="Transparent"
+                                       FontSize="15" ReturnCommand="{Binding SaveInsuranceCommand}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditInsuranceClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ═══ KONTAKTPERSONER ═══ -->
+            <Label Text="KONTAKTPERSONER" FontSize="11" FontAttributes="Bold"
+                   TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16"/>
+
+            <Border StrokeShape="RoundRectangle 14" Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27" Padding="20,8" Margin="0,0,0,40">
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Kontaktperson 1 namn -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <BoxView Grid.ColumnSpan="3" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="👤" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Kontaktperson 1" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding ContactPerson1}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding ContactPerson1ReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding ContactPerson1Editing}">
+                                <Entry Text="{Binding ContactPerson1}" TextColor="#F0F0F0" BackgroundColor="Transparent"
+                                       FontSize="15" ReturnCommand="{Binding SaveContactPerson1Command}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditContactPerson1Clicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Kontaktperson 1 telefon -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <BoxView Grid.ColumnSpan="3" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="📞" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Kontaktperson 1 telefon" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding ContactPerson1PhoneNumber}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding ContactPerson1PhoneReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding ContactPerson1PhoneEditing}">
+                                <Entry Text="{Binding ContactPerson1PhoneNumber}" TextColor="#F0F0F0"
+                                       BackgroundColor="Transparent" FontSize="15" Keyboard="Telephone"
+                                       ReturnCommand="{Binding SaveContactPerson1PhoneCommand}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditContactPerson1PhoneClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Kontaktperson 2 namn -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <BoxView Grid.ColumnSpan="3" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="👤" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Kontaktperson 2" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding ContactPerson2}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding ContactPerson2ReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding ContactPerson2Editing}">
+                                <Entry Text="{Binding ContactPerson2}" TextColor="#F0F0F0" BackgroundColor="Transparent"
+                                       FontSize="15" ReturnCommand="{Binding SaveContactPerson2Command}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditContactPerson2Clicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Kontaktperson 2 telefon -->
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="0,12" MinimumHeightRequest="56">
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 8" Stroke="Transparent" VerticalOptions="Center" Margin="0,0,12,0">
+                            <Label Text="📞" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Kontaktperson 2 telefon" FontSize="12" TextColor="#8A8F9E"/>
+                            <Label Text="{Binding ContactPerson2PhoneNumber}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="#F0F0F0" IsVisible="{Binding ContactPerson2PhoneReadOnly}"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E83B3B" BackgroundColor="#0F1117"
+                                    Padding="8,4" IsVisible="{Binding ContactPerson2PhoneEditing}">
+                                <Entry Text="{Binding ContactPerson2PhoneNumber}" TextColor="#F0F0F0"
+                                       BackgroundColor="Transparent" FontSize="15" Keyboard="Telephone"
+                                       ReturnCommand="{Binding SaveContactPerson2PhoneCommand}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="#2A2D38" StrokeShape="RoundRectangle 8"
+                                Stroke="Transparent" Padding="12,6" VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditContactPerson2PhoneClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Redigera" FontSize="12" TextColor="#E83B3B" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+</ContentPage>

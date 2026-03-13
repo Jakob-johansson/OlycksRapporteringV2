@@ -3,31 +3,159 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OlycksRapporteringV2.MAUI.Views.LoginPage"
              Title="LoginPage">
-    <VerticalStackLayout>
-        <Label 
-        Text="Logga in som anställd"
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" />
-        <VerticalStackLayout Padding="30">
+    <ScrollView>
+        <Grid RowDefinitions="*, Auto"
+              MinimumHeightRequest="700">
 
+            <VerticalStackLayout Grid.Row="0"
+                                 Padding="36,60,36,20"
+                                 Spacing="0"
+                                 VerticalOptions="Center">
 
+                <!-- Ikon -->
+                <Border WidthRequest="80"
+                        HeightRequest="80"
+                        HorizontalOptions="Start"
+                        Margin="0,0,0,32"
+                        BackgroundColor="#E83B3B"
+                        StrokeShape="RoundRectangle 20"
+                        Stroke="Transparent">
+                    <Label Text="👤"
+                           FontSize="36"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
 
+                <!-- Rubrik -->
+                <Label Text="Logga&#10;in"
+                       FontSize="42"
+                       FontAttributes="Bold"
+                       TextColor="#F0F0F0"
+                       LineHeight="1.1"
+                       Margin="0,0,0,16"/>
 
-            <Entry
-    Placeholder="Anställnings ID"
-    Text="{Binding EmployeeId}" />
+                <!-- Dekorativ linje -->
+                <BoxView HeightRequest="3"
+                         WidthRequest="60"
+                         Color="#E83B3B"
+                         HorizontalOptions="Start"
+                         Margin="0,0,0,24"/>
 
-            <Entry
-    Placeholder="Lösenord"
-    IsPassword="True"
-    Text="{Binding Password}" />
+                <!-- Undertext -->
+                <Label Text="Ange dina uppgifter för att fortsätta."
+                       FontSize="16"
+                       TextColor="#8A8F9E"
+                       LineHeight="1.6"
+                       Margin="0,0,0,40"/>
 
-            <Button
-    Text="Logga in"
-    Command="{Binding LoginCommand}"
-            />
+                <!-- Anställnings-ID fält -->
+                <Label Text="ANSTÄLLNINGS-ID"
+                       FontSize="11"
+                       FontAttributes="Bold"
+                       TextColor="#8A8F9E"
+                       CharacterSpacing="1.5"
+                       Margin="0,0,0,8"/>
+                <Border StrokeShape="RoundRectangle 12"
+                        Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27"
+                        Margin="0,0,0,20"
+                        HeightRequest="54"
+                        HorizontalOptions="Start"
+                        WidthRequest="300"
+                        Padding="16,0">
+                    <Entry Placeholder="Ange ditt anställnings-ID"
+                           Text="{Binding EmployeeId}"
+                           PlaceholderColor="#3A3D4A"
+                           TextColor="#F0F0F0"
+                           BackgroundColor="Transparent"
+                           
+                           VerticalOptions="Center"
+                           FontSize="15"/>
+                </Border>
 
-        </VerticalStackLayout>
+                <!-- Lösenord fält -->
+                <Label Text="LÖSENORD"
+                       FontSize="11"
+                       FontAttributes="Bold"
+                       TextColor="#8A8F9E"
+                       CharacterSpacing="1.5"
+                       Margin="0,0,0,8"/>
+                <Border StrokeShape="RoundRectangle 12"
+                        Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27"
+                        Margin="0,0,0,36"
+                        HeightRequest="54"
+                        WidthRequest="300"
+                        HorizontalOptions="Start"
+                        Padding="16,0">
+                    <Entry Placeholder="Ange ditt lösenord"
+                           Text="{Binding Password}"
+                           IsPassword="True"
+                           PlaceholderColor="#3A3D4A"
+                           TextColor="#F0F0F0"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"
+                           FontSize="15"/>
+                </Border>
 
-    </VerticalStackLayout>
+                <!-- Logga in-knapp -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="Transparent"
+                        BackgroundColor="#E83B3B"
+                        HeightRequest="56"
+                        WidthRequest="300"
+                        HorizontalOptions="Start">
+                    
+                    <Button Text="Logga in"
+                            Command="{Binding LoginCommand}"
+                            BackgroundColor="Transparent"
+                            TextColor="White"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            HeightRequest="56"
+                            CornerRadius="14"/>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Sidfot -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Padding="36,0,36,32"
+                                 Spacing="4">
+                <HorizontalStackLayout Spacing="8"
+                                       Margin="0,0,0,20">
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="🔒  Säker"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="📋  GDPR"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="⚡  Realtid"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                </HorizontalStackLayout>
+                <Label Text="© 2025 OlycksRapporteraren"
+                       FontSize="12"
+                       TextColor="#3A3D4A"
+                       HorizontalOptions="Start"/>
+            </VerticalStackLayout>
+
+        </Grid>
+    </ScrollView>
+
 </ContentPage>

@@ -4,36 +4,125 @@
              x:Class="OlycksRapporteringV2.MAUI.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-          Padding="30,0"
-          Spacing="25">
-            <Image
-              Source="dotnet_bot.png"
-              HeightRequest="185"
-              Aspect="AspectFit"
-              SemanticProperties.Description="dot net bot in a submarine number ten" />
+        <Grid RowDefinitions="*, Auto"
+              MinimumHeightRequest="700">
 
-            <Label
-              Text="Välkommen till Olycksrapporteraren!"
-             
-              
-              
-              
-              Style="{StaticResource Headline}"
-              SemanticProperties.HeadingLevel="Level1" />
+            <VerticalStackLayout Grid.Row="0"
+                                 Padding="36,60,36,20"
+                                 Spacing="0"
+                                 VerticalOptions="Center">
 
-            <Label
-              Text="Vänligen logga in eller skapa konto för att forsätta!"
-              Style="{StaticResource SubHeadline}"
-              SemanticProperties.HeadingLevel="Level2"></Label>
+                <!-- Ikon / symbol -->
+                <Border WidthRequest="80"
+                        HeightRequest="80"
+                        HorizontalOptions="Start"
+                        Margin="0,0,0,32"
+                        BackgroundColor="#E83B3B"
+                        StrokeShape="RoundRectangle 20"
+                        Stroke="Transparent">
+                    <Label Text="⚠"
+                           FontSize="38"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           TextColor="White"/>
+                </Border>
 
-            <Button
-              Text="Skapa konto"
-              Clicked="OnClickedGoToCreateAccountPage"></Button>
-            <Button
-              Text="Gå till Login portalen"
-              Clicked="OnClickedGoToPortalPage"></Button>
-        </VerticalStackLayout>
+                <!-- Rubrik -->
+                <Label Text="Olycks&#10;rapporteraren"
+                       FontSize="42"
+                       FontAttributes="Bold"
+                       TextColor="#F0F0F0"
+                       LineHeight="1.1"
+                       Margin="0,0,0,16"/>
+
+                <!-- Dekorativ linje -->
+                <BoxView HeightRequest="3"
+                         WidthRequest="60"
+                         Color="#E83B3B"
+                         HorizontalOptions="Start"
+                         Margin="0,0,0,24"/>
+
+                <!-- Undertext -->
+                <Label Text="Rapportera, hantera och följ upp arbetsplatsolyckor enkelt och säkert."
+                       FontSize="16"
+                       TextColor="#8A8F9E"
+                       LineHeight="1.6"
+                       Margin="0,0,0,48"/>
+
+                <!-- Primärknapp: Logga in -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="Transparent"
+                        BackgroundColor="#E83B3B"
+                        Margin="0,0,0,14"
+                        HeightRequest="56">
+                    <Button Text="Gå till inloggning"
+                            Clicked="OnClickedGoToPortalPage"
+                            BackgroundColor="Transparent"
+                            TextColor="White"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            HeightRequest="56"
+                            CornerRadius="14"/>
+                </Border>
+
+                <!-- Sekundärknapp: Skapa konto -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27"
+                        HeightRequest="56">
+                    <Button Text="Skapa konto"
+                            Clicked="OnClickedGoToCreateAccountPage"
+                            BackgroundColor="Transparent"
+                            TextColor="#C0C4D0"
+                            FontSize="16"
+                            HeightRequest="56"
+                            CornerRadius="14"/>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Sidfot -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Padding="36,0,36,32"
+                                 Spacing="4">
+
+                <!-- Tre info-badges -->
+                <HorizontalStackLayout Spacing="8"
+                                       Margin="0,0,0,20">
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="🔒  Säker"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="📋  GDPR"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="⚡  Realtid"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <Label Text="© 2025 OlycksRapporteraren"
+                       FontSize="12"
+                       TextColor="#3A3D4A"
+                       HorizontalOptions="Start"/>
+            </VerticalStackLayout>
+
+        </Grid>
     </ScrollView>
+
 
 </ContentPage>

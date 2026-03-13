@@ -4,87 +4,371 @@
              x:Class="OlycksRapporteringV2.MAUI.Views.CreateAccount"
              Title="CreateAccount">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15" HorizontalOptions="Center">
+        <VerticalStackLayout Padding="36,60,36,40"
+                             Spacing="0">
 
-            <!-- Header -->
-            <Label 
-            Text="Skapa ditt konto"
-            FontSize="28"
-            FontAttributes="Bold"
-            HorizontalOptions="Center" />
+            <!-- Ikon -->
+            <Border WidthRequest="80"
+                    HeightRequest="80"
+                    HorizontalOptions="Start"
+                    Margin="0,0,0,32"
+                    BackgroundColor="#E83B3B"
+                    StrokeShape="RoundRectangle 20"
+                    Stroke="Transparent">
+                <Label Text="✏️"
+                       FontSize="36"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
 
-            <Label Text="Personlig information" 
-               FontSize="18" 
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+            <!-- Rubrik -->
+            <Label Text="Skapa&#10;konto"
+                   FontSize="42"
+                   FontAttributes="Bold"
+                   TextColor="#F0F0F0"
+                   LineHeight="1.1"
+                   Margin="0,0,0,16"/>
 
-            <!-- Personlig info -->
-            <Entry Text="{Binding EmployeeId}" 
-               Placeholder="Ange ditt anställnings-ID" 
-               WidthRequest="300" HorizontalOptions="Center"/>
-            <Entry Text="{Binding Email}" 
-               Placeholder="Email" 
-               Keyboard="Email" 
-               WidthRequest="300" HorizontalOptions="Center"/>
-            <Entry Text="{Binding Password}" 
-               Placeholder="Lösenord" 
-               IsPassword="True" 
-               WidthRequest="300" HorizontalOptions="Center"/>
-            <Entry Text="{Binding HomeAdress}" 
-               Placeholder="Hemadress" 
-               WidthRequest="300" HorizontalOptions="Center"/>
-            <Entry Text="{Binding SocialSecurityNumber}" 
-               Placeholder="Personnummer" 
-               Keyboard="Numeric" 
-               WidthRequest="300" HorizontalOptions="Center"/>
-            <Entry Text="{Binding PhoneNumber}" 
-               Placeholder="Telefonnummer" 
-               Keyboard="Telephone" 
-               WidthRequest="300" HorizontalOptions="Center"/>
-            <Entry Text="{Binding PersonalBank}" 
-               Placeholder="Bank" 
-               WidthRequest="300" HorizontalOptions="Center"/>
+            <!-- Dekorativ linje -->
+            <BoxView HeightRequest="3"
+                     WidthRequest="60"
+                     Color="#E83B3B"
+                     HorizontalOptions="Start"
+                     Margin="0,0,0,24"/>
+
+            <Label Text="Fyll i dina uppgifter för att skapa ett konto."
+                   FontSize="16"
+                   TextColor="#8A8F9E"
+                   LineHeight="1.6"
+                   Margin="0,0,0,40"/>
+
+            <!-- ═══ PERSONLIG INFORMATION ═══ -->
+            <Label Text="PERSONLIG INFORMATION"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#E83B3B"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,16"/>
+
+            <!-- Anställnings-ID -->
+            <Label Text="ANSTÄLLNINGS-ID"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#8A8F9E"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,8"/>
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Margin="0,0,0,16"
+                    HeightRequest="54"
+                    Padding="16,0">
+                <Entry Placeholder="Ange ditt anställnings-ID"
+                       Text="{Binding EmployeeId}"
+                       PlaceholderColor="#3A3D4A"
+                       TextColor="#F0F0F0"
+                       BackgroundColor="Transparent"
+                       VerticalOptions="Center"
+                       FontSize="15"/>
+            </Border>
+
+            <!-- Email -->
+            <Label Text="EMAIL"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#8A8F9E"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,8"/>
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Margin="0,0,0,16"
+                    HeightRequest="54"
+                    Padding="16,0">
+                <Entry Placeholder="din@email.se"
+                       Text="{Binding Email}"
+                       Keyboard="Email"
+                       PlaceholderColor="#3A3D4A"
+                       TextColor="#F0F0F0"
+                       BackgroundColor="Transparent"
+                       VerticalOptions="Center"
+                       FontSize="15"/>
+            </Border>
+
+            <!-- Lösenord -->
+            <Label Text="LÖSENORD"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#8A8F9E"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,8"/>
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Margin="0,0,0,16"
+                    HeightRequest="54"
+                    Padding="16,0">
+                <Entry Placeholder="Välj ett lösenord"
+                       Text="{Binding Password}"
+                       IsPassword="True"
+                       PlaceholderColor="#3A3D4A"
+                       TextColor="#F0F0F0"
+                       BackgroundColor="Transparent"
+                       VerticalOptions="Center"
+                       FontSize="15"/>
+            </Border>
+
+            <!-- Hemadress -->
+            <Label Text="HEMADRESS"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#8A8F9E"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,8"/>
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Margin="0,0,0,16"
+                    HeightRequest="54"
+                    Padding="16,0">
+                <Entry Placeholder="Gatuadress, stad"
+                       Text="{Binding HomeAdress}"
+                       PlaceholderColor="#3A3D4A"
+                       TextColor="#F0F0F0"
+                       BackgroundColor="Transparent"
+                       VerticalOptions="Center"
+                       FontSize="15"/>
+            </Border>
+
+            <!-- Personnummer -->
+            <Label Text="PERSONNUMMER"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#8A8F9E"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,8"/>
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Margin="0,0,0,16"
+                    HeightRequest="54"
+                    Padding="16,0">
+                <Entry Placeholder="ÅÅMMDD-XXXX"
+                       Text="{Binding SocialSecurityNumber}"
+                       Keyboard="Numeric"
+                       PlaceholderColor="#3A3D4A"
+                       TextColor="#F0F0F0"
+                       BackgroundColor="Transparent"
+                       VerticalOptions="Center"
+                       FontSize="15"/>
+            </Border>
+
+            <!-- Telefonnummer -->
+            <Label Text="TELEFONNUMMER"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#8A8F9E"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,8"/>
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Margin="0,0,0,16"
+                    HeightRequest="54"
+                    Padding="16,0">
+                <Entry Placeholder="07X-XXX XX XX"
+                       Text="{Binding PhoneNumber}"
+                       Keyboard="Telephone"
+                       PlaceholderColor="#3A3D4A"
+                       TextColor="#F0F0F0"
+                       BackgroundColor="Transparent"
+                       VerticalOptions="Center"
+                       FontSize="15"/>
+            </Border>
+
+            <!-- Bank -->
+            <Label Text="BANK"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#8A8F9E"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,8"/>
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Margin="0,0,0,16"
+                    HeightRequest="54"
+                    Padding="16,0">
+                <Entry Placeholder="Din bank"
+                       Text="{Binding PersonalBank}"
+                       PlaceholderColor="#3A3D4A"
+                       TextColor="#F0F0F0"
+                       BackgroundColor="Transparent"
+                       VerticalOptions="Center"
+                       FontSize="15"/>
+            </Border>
 
             <!-- Försäkringsbolag -->
-            <Picker Title="Välj försäkringsbolag"
-                ItemsSource="{Binding InsuranceCompanies}"
-                SelectedItem="{Binding SelectedInsuranceCompany}"
-                WidthRequest="300"
-                HorizontalOptions="Center"/>
+            <Label Text="FÖRSÄKRINGSBOLAG"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#8A8F9E"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,8"/>
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Margin="0,0,0,36"
+                    HeightRequest="54"
+                    Padding="16,0">
+                <Picker 
+                        ItemsSource="{Binding InsuranceCompanies}"
+                        SelectedItem="{Binding SelectedInsuranceCompany}"
+                        TitleColor="#3A3D4A"
+                        TextColor="#F0F0F0"
+                        BackgroundColor="Transparent"
+                        VerticalOptions="Center"/>
+            </Border>
 
-            <!-- Kontaktpersoner -->
-            <Label Text="Kontaktpersoner" 
-               FontSize="18" 
-               FontAttributes="Bold" 
-               HorizontalOptions="Center"/>
+            <!-- ═══ KONTAKTPERSONER ═══ -->
+            <Label Text="KONTAKTPERSONER"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="#E83B3B"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,16"/>
 
-            <Frame BorderColor="LightGray" CornerRadius="10" Padding="10" WidthRequest="320" HorizontalOptions="Center">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Första kontaktpersonen" FontAttributes="Bold"/>
-                    <Entry Text="{Binding ContactPerson1}" Placeholder="Namn" WidthRequest="280" HorizontalOptions="Center"/>
-                    <Entry Text="{Binding ContactPerson1PhoneNumber}" Placeholder="Telefonnummer" WidthRequest="280" HorizontalOptions="Center"/>
+            <!-- Kontaktperson 1 -->
+            <Border StrokeShape="RoundRectangle 14"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Padding="20,16"
+                    Margin="0,0,0,14">
+                <VerticalStackLayout Spacing="0">
+                    <Label Text="Första kontaktpersonen"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#F0F0F0"
+                           Margin="0,0,0,14"/>
+
+                    <Label Text="NAMN"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           TextColor="#8A8F9E"
+                           CharacterSpacing="1.5"
+                           Margin="0,0,0,8"/>
+                    <Border StrokeShape="RoundRectangle 10"
+                            Stroke="#2A2D38"
+                            BackgroundColor="#0F1117"
+                            Margin="0,0,0,12"
+                            HeightRequest="48"
+                            Padding="14,0">
+                        <Entry Placeholder="För- och efternamn"
+                               Text="{Binding ContactPerson1}"
+                               PlaceholderColor="#3A3D4A"
+                               TextColor="#F0F0F0"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="Center"
+                               FontSize="15"/>
+                    </Border>
+
+                    <Label Text="TELEFONNUMMER"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           TextColor="#8A8F9E"
+                           CharacterSpacing="1.5"
+                           Margin="0,0,0,8"/>
+                    <Border StrokeShape="RoundRectangle 10"
+                            Stroke="#2A2D38"
+                            BackgroundColor="#0F1117"
+                            HeightRequest="48"
+                            Padding="14,0">
+                        <Entry Placeholder="07X-XXX XX XX"
+                               Text="{Binding ContactPerson1PhoneNumber}"
+                               Keyboard="Telephone"
+                               PlaceholderColor="#3A3D4A"
+                               TextColor="#F0F0F0"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="Center"
+                               FontSize="15"/>
+                    </Border>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame BorderColor="LightGray" CornerRadius="10" Padding="10" WidthRequest="320" HorizontalOptions="Center">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Andra kontaktpersonen" FontAttributes="Bold"/>
-                    <Entry Text="{Binding ContactPerson2}" Placeholder="Namn" WidthRequest="280" HorizontalOptions="Center"/>
-                    <Entry Text="{Binding ContactPerson2PhoneNumber}" Placeholder="Telefonnummer" WidthRequest="280" HorizontalOptions="Center"/>
+            <!-- Kontaktperson 2 -->
+            <Border StrokeShape="RoundRectangle 14"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    Padding="20,16"
+                    Margin="0,0,0,36">
+                <VerticalStackLayout Spacing="0">
+                    <Label Text="Andra kontaktpersonen"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#F0F0F0"
+                           Margin="0,0,0,14"/>
+
+                    <Label Text="NAMN"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           TextColor="#8A8F9E"
+                           CharacterSpacing="1.5"
+                           Margin="0,0,0,8"/>
+                    <Border StrokeShape="RoundRectangle 10"
+                            Stroke="#2A2D38"
+                            BackgroundColor="#0F1117"
+                            Margin="0,0,0,12"
+                            HeightRequest="48"
+                            Padding="14,0">
+                        <Entry Placeholder="För- och efternamn"
+                               Text="{Binding ContactPerson2}"
+                               PlaceholderColor="#3A3D4A"
+                               TextColor="#F0F0F0"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="Center"
+                               FontSize="15"/>
+                    </Border>
+
+                    <Label Text="TELEFONNUMMER"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           TextColor="#8A8F9E"
+                           CharacterSpacing="1.5"
+                           Margin="0,0,0,8"/>
+                    <Border StrokeShape="RoundRectangle 10"
+                            Stroke="#2A2D38"
+                            BackgroundColor="#0F1117"
+                            HeightRequest="48"
+                            Padding="14,0">
+                        <Entry Placeholder="07X-XXX XX XX"
+                               Text="{Binding ContactPerson2PhoneNumber}"
+                               Keyboard="Telephone"
+                               PlaceholderColor="#3A3D4A"
+                               TextColor="#F0F0F0"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="Center"
+                               FontSize="15"/>
+                    </Border>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
             <!-- Skapa-knappen -->
-            <Button Text="Skapa användare"
-                Command="{Binding CreateUserCommand}"
-                BackgroundColor="#2196F3"
-                TextColor="White"
-                FontAttributes="Bold"
-                CornerRadius="10"
-                HeightRequest="50"
-                WidthRequest="200"
-                HorizontalOptions="Center" />
+            <Border StrokeShape="RoundRectangle 14"
+                    Stroke="Transparent"
+                    BackgroundColor="#E83B3B"
+                    HeightRequest="56"
+                    Margin="0,0,0,40">
+                <Button Text="Skapa konto"
+                        Command="{Binding CreateUserCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HeightRequest="56"
+                        CornerRadius="14"/>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>

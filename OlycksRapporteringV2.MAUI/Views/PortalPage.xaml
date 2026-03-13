@@ -3,20 +3,184 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OlycksRapporteringV2.MAUI.Views.PortalPage"
              Title="PortalPage">
-    <VerticalStackLayout Padding="30" Spacing="20">
+    <ScrollView>
+        <Grid RowDefinitions="*, Auto"
+              MinimumHeightRequest="700">
 
-        <Label 
-    Text="Välj inloggning"
-    FontSize="24"
-    HorizontalOptions="Center"/>
+            <VerticalStackLayout Grid.Row="0"
+                                 Padding="36,60,36,20"
+                                 Spacing="0"
+                                 VerticalOptions="Center">
 
-        <Button 
-    Text="Personalportal"
-    Clicked="EmployeeLoginClicked"/>
+                <!-- Ikon -->
+                <Border WidthRequest="80"
+                        HeightRequest="80"
+                        HorizontalOptions="Start"
+                        Margin="0,0,0,32"
+                        BackgroundColor="#E83B3B"
+                        StrokeShape="RoundRectangle 20"
+                        Stroke="Transparent">
+                    <Label Text="🔑"
+                           FontSize="36"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
 
-        <Button 
-    Text="Ledningsportal"
-    Clicked="SafetyLoginClicked"/>
+                <!-- Rubrik -->
+                <Label Text="Välj&#10;portal"
+                       FontSize="42"
+                       FontAttributes="Bold"
+                       TextColor="#F0F0F0"
+                       LineHeight="1.1"
+                       Margin="0,0,0,16"/>
 
-    </VerticalStackLayout>
+                <!-- Dekorativ linje -->
+                <BoxView HeightRequest="3"
+                         WidthRequest="60"
+                         Color="#E83B3B"
+                         HorizontalOptions="Start"
+                         Margin="0,0,0,24"/>
+
+                <!-- Undertext -->
+                <Label Text="Välj rätt portal för din roll i organisationen."
+                       FontSize="16"
+                       TextColor="#8A8F9E"
+                       LineHeight="1.6"
+                       Margin="0,0,0,48"/>
+
+                <!-- Personalportal-knapp -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27"
+                        Margin="0,0,0,14"
+                        HorizontalOptions="Start"
+                        HeightRequest="72"
+                        WidthRequest="250">
+                    <Grid ColumnDefinitions="Auto, *, Auto"
+                          Padding="20,0">
+                        <Border Grid.Column="0"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                BackgroundColor="#E83B3B"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent"
+                                VerticalOptions="Center">
+                            <Label Text="👷"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1"
+                                             Margin="14,0,0,0"
+                                             VerticalOptions="Center"
+                                             Spacing="2">
+                            <Label Text="Personalportal"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#F0F0F0"/>
+                            <Label Text="För anställda"
+                                   FontSize="12"
+                                   TextColor="#8A8F9E"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2"
+                               Text="›"
+                               FontSize="24"
+                               TextColor="#E83B3B"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="Transparent"
+                                Clicked="EmployeeLoginClicked"
+                                HeightRequest="72"/>
+                    </Grid>
+                </Border>
+
+                <!-- Ledningsportal-knapp -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27"
+                        HeightRequest="72"
+                        WidthRequest="250"
+                        HorizontalOptions="Start">
+                    <Grid ColumnDefinitions="Auto, *, Auto"
+                          Padding="20,0">
+                        <Border Grid.Column="0"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent"
+                                VerticalOptions="Center">
+                            <Label Text="🛡️"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1"
+                                             Margin="14,0,0,0"
+                                             VerticalOptions="Center"
+                                             Spacing="2">
+                            <Label Text="Ledningsportal"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#F0F0F0"/>
+                            <Label Text="För chefer och säkerhetsansvariga"
+                                   FontSize="12"
+                                   TextColor="#8A8F9E"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2"
+                               Text="›"
+                               FontSize="24"
+                               TextColor="#8A8F9E"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="Transparent"
+                                Clicked="SafetyLoginClicked"
+                                HeightRequest="72"/>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Sidfot -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Padding="36,0,36,32"
+                                 Spacing="4">
+                <HorizontalStackLayout Spacing="8"
+                                       Margin="0,0,0,20">
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="🔒  Säker"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="📋  GDPR"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="⚡  Realtid"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                </HorizontalStackLayout>
+                <Label Text="© 2025 OlycksRapporteraren"
+                       FontSize="12"
+                       TextColor="#3A3D4A"
+                       HorizontalOptions="Start"/>
+            </VerticalStackLayout>
+
+        </Grid>
+    </ScrollView>
+
 </ContentPage>

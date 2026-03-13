@@ -23,6 +23,7 @@ namespace OlycksRapporteringV2.Domain.Entities
         public string PeopleInvolved { get; set; }
         public InsuranceCompany Insurance { get; set; }
         public string TimeOfAccident { get; set; }
+        public string AffectedPersonType { get; set; }
 
 
     }

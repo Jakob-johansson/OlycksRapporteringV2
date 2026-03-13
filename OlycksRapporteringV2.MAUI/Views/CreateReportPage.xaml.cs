@@ -1,3 +1,5 @@
+using OlycksRapporteringV2.MAUI.ViewModels;
+
 namespace OlycksRapporteringV2.MAUI.Views;
 
 public partial class CreateReportPage : ContentPage
@@ -7,5 +9,10 @@ public partial class CreateReportPage : ContentPage
 
         InitializeComponent();
         BindingContext = new CreateReportViewModel();
+    }
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 }

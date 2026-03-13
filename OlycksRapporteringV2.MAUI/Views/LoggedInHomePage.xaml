@@ -3,25 +3,278 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OlycksRapporteringV2.MAUI.Views.LoggedInHomePage"
              Title="LoggedInHomePage">
-    <VerticalStackLayout>
-        <Label 
-        Text="Välkommen!" 
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" />
-        <Label 
-        Text="Vänligen välj ett av alternativen nedan"
-        VerticalOptions="Center"
-        HorizontalOptions="Center"/>
+    <ScrollView>
+        <Grid RowDefinitions="*, Auto"
+              MinimumHeightRequest="700">
 
-        <Button 
-        Text="Skapa ny rapport"
-        Clicked="OnClickedGoToCreateReportPage"/>
-        <Button 
-        Text="Hantera rapporter"
-        Clicked="OnClickedGoToManageReportPage"/>
-        <Button 
-        Text="Meddelanden"
-        Clicked="OnClickedGoToNotificationsPage"/>
+            <VerticalStackLayout Grid.Row="0"
+                                 Padding="36,60,36,20"
+                                 Spacing="0"
+                                 VerticalOptions="Center">
+           
+                <!-- Logga ut-knapp -->
+                <Border StrokeShape="RoundRectangle 12"
+        Stroke="#3A1A1A"
+        BackgroundColor="#E83B3B"
+        HeightRequest="48"
+        WidthRequest="130"
+        HorizontalOptions="End"
+        Margin="0,0,0,-70">
+                    <Button Text="Logga ut"
+            Clicked="OnLogoutClicked"
+            BackgroundColor="Transparent"
+            TextColor="#1A1D27"
+            FontSize="16"
+            FontAttributes="Bold"
+            HeightRequest="56"
+            CornerRadius="14"/>
+                </Border>
+                <!-- Hälsning -->
+                <Label Text="Välkommen!"
+                       FontSize="36"
+                       FontAttributes="Bold"
+                       TextColor="#F0F0F0"
+                       Margin="0,0,0,8"/>
 
-    </VerticalStackLayout>
+                <!-- Dekorativ linje -->
+                <BoxView HeightRequest="3"
+                         WidthRequest="60"
+                         Color="#E83B3B"
+                         HorizontalOptions="Start"
+                         Margin="0,0,0,16"/>
+
+                <Label Text="Vad vill du göra idag?"
+                       FontSize="16"
+                       TextColor="#8A8F9E"
+                       Margin="0,0,0,48"/>
+
+                <!-- Skapa ny rapport -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="Transparent"
+                        BackgroundColor="#E83B3B"
+                        Margin="0,0,0,14"
+                        HeightRequest="72"
+                        HorizontalOptions="Start"
+                        WidthRequest="300">
+                    <Grid ColumnDefinitions="Auto, *, Auto"
+                          Padding="20,0">
+                        <Border Grid.Column="0"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                BackgroundColor="#C42F2F"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent"
+                                VerticalOptions="Center">
+                            <Label Text="📝"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1"
+                                             Margin="14,0,0,0"
+                                             VerticalOptions="Center"
+                                             Spacing="2">
+                            <Label Text="Skapa ny rapport"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+                            <Label Text="Rapportera en olycka eller incident"
+                                   FontSize="12"
+                                   TextColor="#FFAAAA"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2"
+                               Text="›"
+                               FontSize="24"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="Transparent"
+                                Clicked="OnClickedGoToCreateReportPage"
+                                HeightRequest="72"/>
+                    </Grid>
+                </Border>
+
+                <!-- Hantera rapporter -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27"
+                        Margin="0,0,0,14"
+                        HeightRequest="72"
+                        HorizontalOptions="Start"
+                        WidthRequest="300">
+                    <Grid ColumnDefinitions="Auto, *, Auto"
+                          Padding="20,0">
+                        <Border Grid.Column="0"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent"
+                                VerticalOptions="Center">
+                            <Label Text="📋"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1"
+                                             Margin="14,0,0,0"
+                                             VerticalOptions="Center"
+                                             Spacing="2">
+                            <Label Text="Hantera rapporter"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#F0F0F0"/>
+                            <Label Text="Se och följ upp dina rapporter"
+                                   FontSize="12"
+                                   TextColor="#8A8F9E"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2"
+                               Text="›"
+                               FontSize="24"
+                               TextColor="#8A8F9E"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="Transparent"
+                                Clicked="OnClickedGoToManageReportPage"
+                                HeightRequest="72"/>
+                    </Grid>
+                </Border>
+
+                <!-- Meddelanden -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27"
+                        Margin="0,0,0,14"
+                        HeightRequest="72"
+                        HorizontalOptions="Start"
+                        WidthRequest="300">
+                    <Grid ColumnDefinitions="Auto, *, Auto"
+                          Padding="20,0">
+                        <Border Grid.Column="0"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent"
+                                VerticalOptions="Center">
+                            <Label Text="🔔"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1"
+                                             Margin="14,0,0,0"
+                                             VerticalOptions="Center"
+                                             Spacing="2">
+                            <Label Text="Meddelanden"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#F0F0F0"/>
+                            <Label Text="Notifikationer och uppdateringar"
+                                   FontSize="12"
+                                   TextColor="#8A8F9E"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2"
+                               Text="›"
+                               FontSize="24"
+                               TextColor="#8A8F9E"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="Transparent"
+                                Clicked="OnClickedGoToNotificationsPage"
+                                HeightRequest="72"/>
+                    </Grid>
+                </Border>
+
+                <!-- Mitt konto -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27"
+                        HeightRequest="72"
+                        HorizontalOptions="Start"
+                        WidthRequest="300">
+                    <Grid ColumnDefinitions="Auto, *, Auto"
+                          Padding="20,0">
+                        <Border Grid.Column="0"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                BackgroundColor="#2A2D38"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent"
+                                VerticalOptions="Center">
+                            <Label Text="👤"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1"
+                                             Margin="14,0,0,0"
+                                             VerticalOptions="Center"
+                                             Spacing="2">
+                            <Label Text="Mitt konto"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#F0F0F0"/>
+                            <Label Text="Visa och redigera din profil"
+                                   FontSize="12"
+                                   TextColor="#8A8F9E"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2"
+                               Text="›"
+                               FontSize="24"
+                               TextColor="#8A8F9E"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                BackgroundColor="Transparent"
+                                Clicked="OnClickedGoToShowAccountPage"
+                                HeightRequest="72"/>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Sidfot -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Padding="36,0,36,32"
+                                 Spacing="4">
+                <HorizontalStackLayout Spacing="8"
+                                       Margin="0,0,0,20">
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="🔒  Säker"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="📋  GDPR"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                    <Border BackgroundColor="#1A1D27"
+                            StrokeShape="RoundRectangle 8"
+                            Stroke="#2A2D38"
+                            Padding="10,6">
+                        <Label Text="⚡  Realtid"
+                               FontSize="12"
+                               TextColor="#8A8F9E"/>
+                    </Border>
+                </HorizontalStackLayout>
+                <Label Text="© 2025 OlycksRapporteraren"
+                       FontSize="12"
+                       TextColor="#3A3D4A"
+                       HorizontalOptions="Start"/>
+            </VerticalStackLayout>
+
+        </Grid>
+    </ScrollView>
+
 </ContentPage>

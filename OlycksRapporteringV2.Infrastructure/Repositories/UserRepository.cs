@@ -34,5 +34,11 @@ namespace OlycksRapporteringV2.Infrastructure.Repositories
                 Builders<User>.Filter.Eq(a => a.Email, identifier));
             return await MongoDb.GetUserCollection().Find(filter).FirstOrDefaultAsync();
         }
+        public async Task UpdateUser(User user)
+        {
+            var filter = Builders<User>.Filter.Eq(u => u.Id, user.Id);
+            await MongoDb.GetUserCollection().ReplaceOneAsync(filter, user);
+        }
+
     }
 }
