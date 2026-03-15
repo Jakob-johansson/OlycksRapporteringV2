@@ -16,7 +16,7 @@ public partial class LoggedInHomePage : ContentPage
 
     private async void OnClickedGoToManageReportPage(object sender, EventArgs e)
     {
-        //await Navigation.PushAsync(new ManageReportPage());
+        await Navigation.PushAsync(new ShowMyReportsPage());
     }
 
     private async void OnClickedGoToNotificationsPage(object sender, EventArgs e)

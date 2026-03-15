@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:OlycksRapporteringV2.MAUI.Converters"
+             xmlns:models="clr-namespace:OlycksRapporteringV2.MAUI.Models"
+             x:Class="OlycksRapporteringV2.MAUI.Views.ShowMyReportsPage"
+             BackgroundColor="Transparent">
+    
+
+        <ContentPage.Resources>
+        <converters:ErrorColorConverter x:Key="ErrorColorConverter"/>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, Auto, *"
+          Padding="20,50,20,20">
+
+        <!-- RUBRIK -->
+        <VerticalStackLayout Grid.Row="0" Spacing="6" Margin="0,0,0,20">
+            <Label Text="Mina rapporter"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#F0F0F0"/>
+            <BoxView HeightRequest="3" WidthRequest="50" Color="#E83B3B" HorizontalOptions="Start"/>
+        </VerticalStackLayout>
+
+        <!-- SNABBKNAPPAR -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="10" Margin="0,0,0,20">
+
+            <!-- Tillbaka -->
+            <Border StrokeShape="RoundRectangle 10"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    HeightRequest="42"
+                    Padding="14,0">
+                <Button Text="← Hem"
+                        Clicked="OnBackClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#E83B3B"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        HeightRequest="42"/>
+            </Border>
+
+            <!-- Redigera vald -->
+            <Border StrokeShape="RoundRectangle 10"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    HeightRequest="42"
+                    Padding="14,0">
+                <Button Text="✏ Redigera"
+                        Clicked="OnEditClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#F0F0F0"
+                        FontSize="13"
+                        HeightRequest="42"/>
+            </Border>
+
+            <!-- Välj för radering -->
+            <Border StrokeShape="RoundRectangle 10"
+                    Stroke="#2A2D38"
+                    BackgroundColor="{Binding SelectModeActive, Converter={StaticResource ErrorColorConverter}}"
+                    HeightRequest="42"
+                    Padding="14,0">
+                <Button Text="🗑 Välj"
+                        Clicked="OnSelectModeClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#F0F0F0"
+                        FontSize="13"
+                        HeightRequest="42"/>
+            </Border>
+
+            <!-- Radera valda (visas bara i välj-läge) -->
+            <Border StrokeShape="RoundRectangle 10"
+                    Stroke="#E83B3B"
+                    BackgroundColor="#1A1D27"
+                    HeightRequest="42"
+                    Padding="14,0"
+                    IsVisible="{Binding SelectModeActive}">
+                <Button Text="Radera valda"
+                        Clicked="OnDeleteSelectedClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#E83B3B"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        HeightRequest="42"/>
+            </Border>
+
+        </HorizontalStackLayout>
+        <VerticalStackLayout Grid.Row="2"
+                     IsVisible="{Binding HasNoReports}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     Spacing="8">
+            <Label Text="Här var det tomt..."
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#F0F0F0"
+                   HorizontalOptions="Center"/>
+            <Label Text="Gå Till 'Skapa ny rapport' för att skicka in en rapport."
+                   FontSize="14"
+                   TextColor="#8A8F9E"
+                   HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+        <!-- RAPPORTLISTA -->
+        
+        <CollectionView Grid.Row="2"
+                        IsVisible="{Binding HasNoReports, Converter={StaticResource InverseBoolConverter}}"
+                        ItemsSource="{Binding Reports}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:SelectableReport">
+                    <Grid Padding="0,0,0,8" >
+                        <!-- Kortet -->
+                        <Border  StrokeShape="RoundRectangle 12"
+                                Stroke="#2A2D38"
+                                BackgroundColor="{Binding CardColor}"
+                                Padding="14,10"
+                                WidthRequest="400"
+                                 HorizontalOptions="Start">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnReportTapped"/>
+                            </Border.GestureRecognizers>
+                            <Grid  ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto">
+
+                                <!-- Status -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Report.Status}"
+                                       FontSize="10"
+                                       FontAttributes="Bold"
+                                       TextColor="#E83B3B"
+                                       CharacterSpacing="1.2"/>
+
+                                <!-- Kryssruta -->
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Grid.RowSpan="3"
+                                       Text="{Binding CheckboxIcon}"
+                                       FontSize="22"
+                                       TextColor="#E83B3B"
+                                       VerticalOptions="Start"
+                                       IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
+                                                   Path=BindingContext.SelectModeActive}"/>
+
+                                <!-- Titel -->
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding Report.ReportTitle}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#F0F0F0"/>
+
+                                <!-- Datum + beskrivning -->
+                                <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Spacing="8">
+                                    <Label Text="{Binding Report.CreatedAt, StringFormat='{0:yyyy-MM-dd}'}"
+                                           FontSize="11"
+                                           TextColor="#3A3D4A"/>
+                                    <Label Text="{Binding ShortDescription}"
+                                           FontSize="11"
+                                           TextColor="#8A8F9E"
+                                           LineBreakMode="TailTruncation"
+                                           
+                                          />
+                                </HorizontalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>

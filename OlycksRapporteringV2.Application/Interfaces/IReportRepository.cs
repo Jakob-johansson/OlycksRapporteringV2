@@ -9,7 +9,7 @@ namespace OlycksRapporteringV2.Application.Interfaces
     {
         Task CreateReport(Report report);
 
-
-
+        Task<List<Report>> GetReportByUserId(string userId);
+        Task DeleteReport(string id);
     }
 }
