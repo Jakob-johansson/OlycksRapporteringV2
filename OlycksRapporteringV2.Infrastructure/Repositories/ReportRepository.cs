@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using OlycksRapporteringV2.Application.Interfaces;
 using OlycksRapporteringV2.Domain.Entities;
+using OlycksRapporteringV2.Domain.Enums;
 using OlycksRapporteringV2.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,26 @@ namespace OlycksRapporteringV2.Infrastructure.Repositories
             var filter = Builders<Report>.Filter.Eq(r => r.Id, id);
             await MongoDb.GetReportCollection().DeleteOneAsync(filter);
         }
+        public async Task<List<Report>> GetAllReports()
+        {
+            return await MongoDb.GetReportCollection().Find(_ => true).ToListAsync();
+        }
+        public async Task UpdateReportStatus(string reportId, ReportStatus status)
+        {
+            var filter = Builders<Report>.Filter.Eq(r => r.Id, reportId);
+            var update = Builders<Report>.Update.Set(r => r.Status, status);
+            await MongoDb.GetReportCollection().UpdateOneAsync(filter, update);
+        }
+        public async Task UpdateReport(Report report)
+        {
+            var filter = Builders<Report>.Filter.Eq(r => r.Id, report.Id);
+            await MongoDb.GetReportCollection().ReplaceOneAsync(filter, report);
+        }
 
+        public async Task<Report> GetReportById(string id)
+        {
+            var filter = Builders<Report>.Filter.Eq(r => r.Id, id);
+            return await MongoDb.GetReportCollection().Find(filter).FirstOrDefaultAsync();
+        }
     }
 }

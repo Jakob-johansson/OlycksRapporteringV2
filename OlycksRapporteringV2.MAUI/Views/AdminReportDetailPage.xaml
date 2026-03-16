@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:OlycksRapporteringV2.MAUI.Converters"
+             x:Class="OlycksRapporteringV2.MAUI.Views.AdminReportDetailPage"
+             BackgroundColor="#0F1117">
+
+    <ContentPage.Resources>
+        <converters:EqualToConverter x:Key="EqualToConverter"/>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,52,28,40" Spacing="0">
+
+            <!-- Tillbaka-knapp -->
+            <Border StrokeShape="RoundRectangle 12"
+                    Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27"
+                    HeightRequest="48"
+                    WidthRequest="130"
+                    HorizontalOptions="Start"
+                    Margin="0,0,0,24">
+                <Button Text="← Tillbaka"
+                        Clicked="OnBackClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#E83B3B"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        HeightRequest="48"
+                        CornerRadius="12"/>
+            </Border>
+
+            <!-- Ikon -->
+            <Border WidthRequest="80" HeightRequest="80"
+                    HorizontalOptions="Start" Margin="0,0,0,32"
+                    BackgroundColor="#E83B3B" StrokeShape="RoundRectangle 20" Stroke="Transparent">
+                <Label Text="📋" FontSize="36"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+
+            <!-- Titel -->
+            <Label Text="{Binding Report.ReportTitle}"
+                   FontSize="32" FontAttributes="Bold"
+                   TextColor="#F0F0F0" Margin="0,0,0,8"/>
+
+            <!-- Dekorativ linje -->
+            <BoxView HeightRequest="3" WidthRequest="60" Color="#E83B3B"
+                     HorizontalOptions="Start" Margin="0,0,0,24"/>
+
+            <!-- Status badge -->
+            <Label Text="{Binding Report.Status}"
+                   FontSize="12" FontAttributes="Bold"
+                   TextColor="#E83B3B" CharacterSpacing="1.5"
+                   Margin="0,0,0,32"/>
+
+            <!-- ═══ RAPPORTINFORMATION ═══ -->
+            <Label Text="RAPPORTINFORMATION" FontSize="11" FontAttributes="Bold"
+                   TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16"/>
+
+            <Border StrokeShape="RoundRectangle 14" Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27" Padding="20,8" Margin="0,0,0,24">
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Skapad av -->
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Label Text="Skapad av" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Report.CreatedByUserId}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Datum -->
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Label Text="Datum" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1"
+                               Text="{Binding Report.CreatedAt, StringFormat='{0:yyyy-MM-dd HH:mm}'}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Typ av olycka -->
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Label Text="Typ av olycka" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Report.AccidentType}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Plats -->
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Label Text="Plats" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Report.Location}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Tid vid olycka -->
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Label Text="Tid vid olycka" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Report.TimeOfAccident}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Personer inblandade -->
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <Label Text="Inblandade" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Report.PeopleInvolved}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ═══ BESKRIVNING ═══ -->
+            <Label Text="BESKRIVNING" FontSize="11" FontAttributes="Bold"
+                   TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16"/>
+
+            <Border StrokeShape="RoundRectangle 14" Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27" Padding="20,16" Margin="0,0,0,24">
+                <Label Text="{Binding Report.ReportDescription}"
+                       FontSize="14" TextColor="#F0F0F0" LineHeight="1.6"/>
+            </Border>
+
+            <!-- ═══ SKADOR & ÅTGÄRDER ═══ -->
+            <Label Text="SKADOR &amp; ÅTGÄRDER" FontSize="11" FontAttributes="Bold"
+                   TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16"/>
+
+            <Border StrokeShape="RoundRectangle 14" Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27" Padding="20,8" Margin="0,0,0,36">
+                <VerticalStackLayout Spacing="0">
+
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Label Text="Materiell skada" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Report.MaterialDamage}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                        <Label Text="Omedelbara åtgärder" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Report.ImmediateActions}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                        <Label Text="Förebyggande åtgärder" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding Report.PreventiveActions}"
+                               FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                               HorizontalOptions="End" VerticalOptions="Center"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ═══ SÄTT STATUS ═══ -->
+            <Label Text="SÄTT STATUS" FontSize="11" FontAttributes="Bold"
+                   TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16"/>
+
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto"
+                  ColumnSpacing="10" RowSpacing="10" Margin="0,0,0,40">
+
+                <!-- Created -->
+                <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 12"
+                        Stroke="{Binding ActiveStatus, Converter={StaticResource EqualToConverter}, ConverterParameter='Created'}"
+                        BackgroundColor="#1A1D27" HeightRequest="56">
+                    <Button Text="● Created" Clicked="OnSetCreatedClicked"
+                            BackgroundColor="Transparent" TextColor="#8A8F9E"
+                            FontSize="13" FontAttributes="Bold"/>
+                </Border>
+
+                <!-- Pending -->
+                <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 12"
+                        Stroke="{Binding ActiveStatus, Converter={StaticResource EqualToConverter}, ConverterParameter='Pending'}"
+                        BackgroundColor="#1A1D27" HeightRequest="56">
+                    <Button Text="● Pending" Clicked="OnSetPendingClicked"
+                            BackgroundColor="Transparent" TextColor="#F5A623"
+                            FontSize="13" FontAttributes="Bold"/>
+                </Border>
+
+                <!-- UnderReview -->
+                <Border Grid.Row="1" Grid.Column="0" StrokeShape="RoundRectangle 12"
+                        Stroke="{Binding ActiveStatus, Converter={StaticResource EqualToConverter}, ConverterParameter='UnderReview'}"
+                        BackgroundColor="#1A1D27" HeightRequest="56">
+                    <Button Text="● UnderReview" Clicked="OnSetUnderReviewClicked"
+                            BackgroundColor="Transparent" TextColor="#4A9EFF"
+                            FontSize="13" FontAttributes="Bold"/>
+                </Border>
+
+                <!-- Approved -->
+                <Border Grid.Row="1" Grid.Column="1" StrokeShape="RoundRectangle 12"
+                        Stroke="{Binding ActiveStatus, Converter={StaticResource EqualToConverter}, ConverterParameter='Approved'}"
+                        BackgroundColor="#1A1D27" HeightRequest="56">
+                    <Button Text="● Approved" Clicked="OnSetApprovedClicked"
+                            BackgroundColor="Transparent" TextColor="#4CAF50"
+                            FontSize="13" FontAttributes="Bold"/>
+                </Border>
+
+                <!-- Rejected -->
+                <Border Grid.Row="2" Grid.Column="0" StrokeShape="RoundRectangle 12"
+                        Stroke="{Binding ActiveStatus, Converter={StaticResource EqualToConverter}, ConverterParameter='Rejected'}"
+                        BackgroundColor="#1A1D27" HeightRequest="56">
+                    <Button Text="● Rejected" Clicked="OnSetRejectedClicked"
+                            BackgroundColor="Transparent" TextColor="#E83B3B"
+                            FontSize="13" FontAttributes="Bold"/>
+                </Border>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,11 +1,15 @@
 ﻿
+using OlycksRapporteringV2.Application.Interfaces;
 using OlycksRapporteringV2.Domain.Entities;
+using OlycksRapporteringV2.Infrastructure.Repositories;
+using OlycksRapporteringV2.MAUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using ZstdSharp.Unsafe;
 
 namespace OlycksRapporteringV2.MAUI.Models
 {
@@ -38,5 +42,7 @@ namespace OlycksRapporteringV2.MAUI.Models
         public string ShortDescription => Report.ReportDescription?.Length > 60
             ? Report.ReportDescription.Substring(0, 60) + "..."
             : Report.ReportDescription;
+
+        public string CreatedByName { get; set; }
     }
 }

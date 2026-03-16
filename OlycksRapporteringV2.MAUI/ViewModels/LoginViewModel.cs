@@ -98,7 +98,7 @@ public class LoginViewModel : INotifyPropertyChanged
         }
         else
         {
-            Application.Current.MainPage = new NavigationPage(new OlycksRapporteringV2.MAUI.Views.LoggedInAdminPAge());
+            Application.Current.MainPage = new NavigationPage(new OlycksRapporteringV2.MAUI.Views.LoggedInAdminPage());
         }
     }
 

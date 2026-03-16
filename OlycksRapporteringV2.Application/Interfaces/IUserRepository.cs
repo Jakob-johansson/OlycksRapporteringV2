@@ -10,5 +10,7 @@ namespace OlycksRapporteringV2.Application.Interfaces
         Task<User> GetUserByEmployeeId(string employeeId);
         Task OnClickedCreateUser(User user);
         Task UpdateUser(User user);
+        
+        Task<User> GetUserById(string id); 
     }
 }

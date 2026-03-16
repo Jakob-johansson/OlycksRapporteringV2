@@ -16,4 +16,9 @@ public partial class PortalPage : ContentPage
     {
         await Navigation.PushAsync(new LoginPage("SafetyPortal"));
     }
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

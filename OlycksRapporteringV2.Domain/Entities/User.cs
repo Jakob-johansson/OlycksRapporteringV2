@@ -12,6 +12,7 @@ namespace OlycksRapporteringV2.Domain.Entities
         public string EmployeeId { get; set; }
         public string PasswordHash { get; set; }
         public string Email { get; set; }
+       
 
         public UserRole Role { get; set; }
         public DateTime CreatedAt { get; set; }

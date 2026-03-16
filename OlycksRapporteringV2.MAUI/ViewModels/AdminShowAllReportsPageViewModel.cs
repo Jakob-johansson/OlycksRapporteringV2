@@ -9,15 +9,29 @@ using System.Runtime.CompilerServices;
 
 namespace OlycksRapporteringV2.MAUI.ViewModels
 {
-    public class ShowMyReportsPageViewModel : INotifyPropertyChanged
+    public class AdminShowAllReportsPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private readonly IReportRepository _repo;
-        private readonly INotificationRepository _notificationRepo; // ← flyttad hit
+        private readonly IUserRepository _userRepo;
 
-        //LISTOR\\
+        //ALLA RAPPORTER (ANVÄNDS FÖR FILTRERING)\\
+        private List<SelectableReport> _allReports = new();
+
         public ObservableCollection<SelectableReport> Reports { get; set; } = new();
         public bool HasNoReports => !Reports.Any();
+
+        private string _activeFilter;
+        public string ActiveFilter
+        {
+            get => _activeFilter;
+            set
+            {
+                _activeFilter = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         //VÄLJ-LÄGE\\
         private bool _selectModeActive;
@@ -27,7 +41,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             set { _selectModeActive = value; OnPropertyChanged(); }
         }
 
-        //VALD RAPPORT FÖR REDIGERING\\
+        //VALD RAPPORT\\
         private Report _selectedReport;
         public Report SelectedReport
         {
@@ -36,26 +50,48 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         }
 
         //KONSTRUKTOR\\
-        public ShowMyReportsPageViewModel()
+        public AdminShowAllReportsPageViewModel()
         {
             _repo = new ReportRepositoryDb();
-            _notificationRepo = new NotificationRepositoryDb();
+            _userRepo = new UserRepositoryDb();
         }
 
-        //HÄMTA RAPPORTER FRÅN DATABASEN\\
+        //HÄMTA ALLA RAPPORTER\\
         public async Task LoadReports()
         {
-            var reports = await _repo.GetReportByUserId(UserSession.CurrentUser.Id);
-            Reports.Clear();
+            var reports = await _repo.GetAllReports();
+            _allReports.Clear();
             foreach (var report in reports)
-                Reports.Add(new SelectableReport { Report = report });
-            OnPropertyChanged(nameof(HasNoReports));
+            {
+                var user = await _userRepo.GetUserById(report.CreatedByUserId);
+                _allReports.Add(new SelectableReport
+                {
+                    Report = report,
+                    CreatedByName = user != null ? user.EmployeeId : "Okänd användare"
+                });
+            }
+            ApplyFilter(null); // VISA ALLA FRÅN START\\
         }
 
-        //VÄXLA MARKERING PÅ ETT KORT\\
+        //VÄXLA MARKERING\\
         public void ToggleSelection(SelectableReport item)
         {
             item.IsSelected = !item.IsSelected;
+        }
+
+        //RADERA MARKERADE\\
+        public async Task DeleteSelected()
+        {
+            var toDelete = Reports.Where(r => r.IsSelected).ToList();
+            foreach (var item in toDelete)
+            {
+                await _repo.DeleteReport(item.Report.Id);
+                _allReports.Remove(item);
+                Reports.Remove(item);
+            }
+            SelectModeActive = false;
+            SelectedReport = null;
+            OnPropertyChanged(nameof(HasNoReports));
         }
 
         //AVMARKERA ALLA\\
@@ -65,34 +101,25 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
                 item.IsSelected = false;
         }
 
-        //RADERA MARKERADE RAPPORTER\\
-        public async Task DeleteSelected()
+        //FILTRERA PÅ STATUS\\
+        public void FilterByStatus(string status)
         {
-            var toDelete = Reports.Where(r => r.IsSelected).ToList();
-            foreach (var item in toDelete)
-            {
-                await _repo.DeleteReport(item.Report.Id);
-                Reports.Remove(item);
-            }
-            SelectModeActive = false;
-            SelectedReport = null;
-            OnPropertyChanged(nameof(HasNoReports));
+            ApplyFilter(status);
         }
 
-        //SKICKA REDIGERINGSBEGÄRAN TILL ADMIN\\
-        public async Task SendEditRequest(Report report)
+        private void ApplyFilter(string status)
         {
-            var notification = new Notification
-            {
-                Id = Guid.NewGuid().ToString(),
-                FromUserId = UserSession.CurrentUser.EmployeeId,
-                ReportId = report.Id,
-                ReportTitle = report.ReportTitle,
-                Message = $"{UserSession.CurrentUser.EmployeeId} begär att få ändra rapporten: {report.ReportTitle}",
-                CreatedAt = DateTime.Now,
-                IsRead = false
-            };
-            await _notificationRepo.SendNotification(notification);
+            ActiveFilter = status ?? "";
+
+            Reports.Clear();
+            var filtered = status == null
+                ? _allReports
+                : _allReports.Where(r => r.Report.Status.ToString() == status).ToList();
+
+            foreach (var item in filtered)
+                Reports.Add(item);
+
+            OnPropertyChanged(nameof(HasNoReports));
         }
 
         void OnPropertyChanged([CallerMemberName] string name = null)

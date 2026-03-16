@@ -40,11 +40,24 @@ public partial class ShowMyReportsPage : ContentPage
         if (vm.SelectedReport == null)
         {
             await DisplayAlertAsync("Ingen vald", "Tryck på en rapport först", "OK");
+            return;
+        }
+       if(vm.SelectedReport.Status == Domain.Enums.ReportStatus.Created)
+        {
+            await Navigation.PushAsync(new EditReportPage(vm.SelectedReport));
         }
         else
         {
-            //HÄR FÅR ADMIN NOTIS FRÅN ANVÄNDARE OM ATT DE VILL ÄNDRA RAPPORTEN\\
-            await DisplayAlertAsync("Ej tillåtet", "Rapporten har redan ganskats. En förfrågan skickas till ansvarig", "OK");
+            bool confirm = await DisplayAlertAsync(
+                "Begär ändring",
+                "Rapporten har redan granskats. vill du skicka en begäran till admin om att få ändra den?",
+                "Ja", "Avbryt"
+                );
+            if (confirm)
+            {
+                await vm.SendEditRequest(vm.SelectedReport);
+                await DisplayAlertAsync("Skickat", "Din begäran har skickats till admin", "Ok");
+            }
         }
     }
 
