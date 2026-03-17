@@ -12,7 +12,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // ── Fältvärden ────────────────────────────────────────────────
+      
 
         private string employeeId;
         public string EmployeeId { get => employeeId; set { employeeId = value; OnPropertyChanged(); } }
@@ -44,7 +44,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         private string contactPerson2PhoneNumber;
         public string ContactPerson2PhoneNumber { get => contactPerson2PhoneNumber; set { contactPerson2PhoneNumber = value; OnPropertyChanged(); } }
 
-        // ── Redigera-lägen ────────────────────────────────────────────
+        
 
         private bool employeeIdReadOnly = true;
         public bool EmployeeIdReadOnly { get => employeeIdReadOnly; set { employeeIdReadOnly = value; OnPropertyChanged(); OnPropertyChanged(nameof(EmployeeIdEditing)); } }
@@ -86,8 +86,6 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public bool ContactPerson2PhoneReadOnly { get => contactPerson2PhoneReadOnly; set { contactPerson2PhoneReadOnly = value; OnPropertyChanged(); OnPropertyChanged(nameof(ContactPerson2PhoneEditing)); } }
         public bool ContactPerson2PhoneEditing => !contactPerson2PhoneReadOnly;
 
-        // ── Save-kommandon (stänger redigera-läget) ───────────────────
-
         public ICommand SaveEmployeeIdCommand => new Command(() => EmployeeIdReadOnly = true);
         public ICommand SaveEmailCommand => new Command(() => EmailReadOnly = true);
         public ICommand SavePhoneCommand => new Command(() => PhoneReadOnly = true);
@@ -99,7 +97,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public ICommand SaveContactPerson2Command => new Command(() => ContactPerson2ReadOnly = true);
         public ICommand SaveContactPerson2PhoneCommand => new Command(() => ContactPerson2PhoneReadOnly = true);
 
-        // ── Toggle-hjälpmetod (anropas från code-behind) ──────────────
+       
 
         public void ToggleEdit(string field)
         {
@@ -118,11 +116,11 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             }
         }
 
-        // ── Konstruktor ───────────────────────────────────────────────
+        
 
         public EditAccountViewModel()
         {
-            // Fyll i från inloggad användare
+            
             var user = UserSession.Instance.CurrentUser;
             if (user != null)
             {

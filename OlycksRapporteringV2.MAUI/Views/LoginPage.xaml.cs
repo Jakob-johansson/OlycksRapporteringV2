@@ -1,3 +1,5 @@
+using OlycksRapporteringV2.MAUI.ViewModels;
+
 namespace OlycksRapporteringV2.MAUI.Views;
 
 public partial class LoginPage : ContentPage

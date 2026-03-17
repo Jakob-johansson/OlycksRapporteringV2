@@ -1,12 +1,12 @@
 ﻿using OlycksRapporteringV2.Application.Interfaces;
 using OlycksRapporteringV2.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
+
 using OlycksRapporteringV2.Infrastructure.Repositories;
 
 using OlycksRapporteringV2.Domain.Enums;
 using OlycksRapporteringV2.Application.Services;
+
 namespace OlycksRapporteringV2.MAUI.Services
 {
     public class ReportService
@@ -65,11 +65,21 @@ namespace OlycksRapporteringV2.MAUI.Services
         {
             return await _reportRepo.GetReportById(id);
         }
+        
 
         public async Task UpdateReportStatus (string id, ReportStatus status)
         {
             await _reportRepo.UpdateReportStatus(id, status);
         }
 
+        public async Task UpdateReport(Report report)
+        {
+            await _reportRepo.UpdateReport(report);
+        }
+        public async Task SendEditRequest(Report report)
+        {
+            
+        }
+      
     }
 }

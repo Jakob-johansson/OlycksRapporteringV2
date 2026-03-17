@@ -27,6 +27,7 @@ namespace OlycksRapporteringV2.Infrastructure.Repositories
 
         //När man loggar in så gör denna funktion så man kan använda både email eller användarnamn, 
         //den kollar efter båda istället för att man ska välja.
+        // ANVÄNDS INTE LÄNGRE MEN FÅR LIGGA KVAR ÄNDÅ \\
         public async Task<User> GetUserByEmployeeIdOrEmail(string identifier)
         {
             var filter = Builders<User>.Filter.Or(

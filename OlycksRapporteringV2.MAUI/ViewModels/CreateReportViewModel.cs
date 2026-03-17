@@ -1,15 +1,10 @@
-﻿using OlycksRapporteringV2.Application.Interfaces;
+﻿
 using OlycksRapporteringV2.Application.Services;
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Domain.Enums;
-using OlycksRapporteringV2.Infrastructure.Repositories;
 using OlycksRapporteringV2.MAUI.Services;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Windows.Input;
 using MauiApp = Microsoft.Maui.Controls.Application;
 
@@ -18,7 +13,12 @@ namespace OlycksRapporteringV2.MAUI.ViewModels;
 public class CreateReportViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
-   
+    private readonly ReportService _reportService;
+    private readonly WeatherService _weatherService;
+
+    //Design pattern: Facade
+    //Här använder vi facade för att viewmodel ska slippa hålla koll på alla repositories som behövs, nu används ReportService istället.
+
 
     //KONTROLLERAR OM NÅGOT FÄLLT ÄR FEL\\
     //---Skickar sedan ett felmeddelande---\\
@@ -176,14 +176,16 @@ public class CreateReportViewModel : INotifyPropertyChanged
     //KOMMANDO\\
     public ICommand CreateReportCommand { get; }
 
-    private readonly ReportService _reportService;
     public CreateReportViewModel()
     {
         _reportService = new ReportService();
+        _weatherService = new WeatherService();
         CreateReportCommand = new Command(async () => await CreateReport());
+
     }
 
-    //SKAPA RAPPORT MED FELHANTERING\\
+    //------SKAPA RAPPORT MED FELHANTERING-------\\
+    //  Samt hämta data för väder \\
     private async Task CreateReport()
     {
         bool hasErrors = false;
@@ -212,12 +214,24 @@ public class CreateReportViewModel : INotifyPropertyChanged
             System.Globalization.DateTimeStyles.None,
             out DateTime parsedTime);
 
+       
+
+
         if (!timeOk)
         { TimeHasError = true; hasErrors = true; }
+        //Väder
+       
+
 
         //OM DET FINNS FEL, STOPPA HÄR\\
         if (hasErrors) return;
 
+        //Hämta väder location samt tid för olycka. 
+        var weather = await _weatherService.GetWeatherForLocation(Location, TimeOfAccident);
+        
+        //Felsökning, skickar ut i output fönstret. ej viktigt för programmet med viktigt för mig :D
+        System.Diagnostics.Debug.WriteLine($"Väder resultat: {weather?.description}, {weather?.temp}, {weather?.wind}");
+        System.Diagnostics.Debug.WriteLine($"Weather är null: {weather == null}");
         //SKAPA RAPPORT OCH SPARA I DATABASEN\\
         var report = new Report
         {
@@ -236,8 +250,17 @@ public class CreateReportViewModel : INotifyPropertyChanged
             IsVisibleToUser = true,
             Insurance = UserSession.Instance.CurrentUser.Insurance,
             TimeOfAccident = TimeOfAccident,
-            AffectedPersonType = SelectedAffectedPersonType
+            AffectedPersonType = SelectedAffectedPersonType,
+            WeatherDescription = weather?.description,
+            Temperature = weather?.temp,
+            WindSpeed = weather?.wind,
+            WeatherLocation = Location
+
+
+
         };
+       
+      
 
         await _reportService.CreateReport(report);
         

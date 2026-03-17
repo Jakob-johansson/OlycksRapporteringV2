@@ -2,6 +2,7 @@
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Domain.Enums;
 using OlycksRapporteringV2.Infrastructure.Repositories;
+using OlycksRapporteringV2.MAUI.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -13,22 +14,22 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
     public class EditReportPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private readonly IReportRepository _repo;
+        private readonly ReportService _reportService;
 
-        //ERRORS DICTIONARY\\
+       
         private Dictionary<string, bool> _errors = new();
 
-        //RAPPORTEN\\
+        
         private Report _report;
 
-        //FELHANTERING\\
+        
         public bool TimeHasError
         {
             get => _errors.GetValueOrDefault("Time");
             set { _errors["Time"] = value; OnPropertyChanged(); }
         }
 
-        //PROPERTIES\\
+       
         private string reportTitle;
         public string ReportTitle
         {
@@ -85,7 +86,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             set { preventiveActions = value; OnPropertyChanged(); }
         }
 
-        //REDIGERA-LÄGEN\\
+        
         private bool reportTitleReadOnly = true;
         public bool ReportTitleReadOnly { get => reportTitleReadOnly; set { reportTitleReadOnly = value; OnPropertyChanged(); OnPropertyChanged(nameof(ReportTitleEditing)); } }
         public bool ReportTitleEditing => !reportTitleReadOnly;
@@ -118,7 +119,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public bool PreventiveReadOnly { get => preventiveReadOnly; set { preventiveReadOnly = value; OnPropertyChanged(); OnPropertyChanged(nameof(PreventiveEditing)); } }
         public bool PreventiveEditing => !preventiveReadOnly;
 
-        //SAVE-KOMMANDON\\
+        
         public ICommand SaveReportTitleCommand => new Command(() => ReportTitleReadOnly = true);
         public ICommand SaveReportDescriptionCommand => new Command(() => ReportDescriptionReadOnly = true);
         public ICommand SaveLocationCommand => new Command(() => LocationReadOnly = true);
@@ -128,7 +129,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public ICommand SaveImmediateCommand => new Command(() => ImmediateReadOnly = true);
         public ICommand SavePreventiveCommand => new Command(() => PreventiveReadOnly = true);
 
-        //TOGGLE-HJÄLPMETOD\\
+     
         public void ToggleEdit(string field)
         {
             switch (field)
@@ -144,10 +145,9 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             }
         }
 
-        //SPARA ALLT TILL DATABASEN\\
+      
         public ICommand SaveAllCommand => new Command(async () =>
         {
-            //VALIDERING AV TID\\
             var formats = new[] { "yyyy-MM-dd HH:mm", "yyyyMMdd HH:mm", "d/M-yy HH:mm" };
             bool timeOk = DateTime.TryParseExact(
                 TimeOfAccident?.Trim(), formats,
@@ -171,17 +171,17 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             _report.ImmediateActions = ImmediateActions;
             _report.PreventiveActions = PreventiveActions;
 
-            await _repo.UpdateReport(_report);
+            await _reportService.UpdateReport(_report);
             await MauiApp.Current.MainPage.DisplayAlert("Sparat", "Rapporten har uppdaterats.", "OK");
         });
 
-        //KONSTRUKTOR\\
+      
         public EditReportPageViewModel(Report report)
         {
-            _repo = new ReportRepositoryDb();
+            _reportService = new ReportService();
             _report = report;
 
-            //FYLL I BEFINTLIGA VÄRDEN\\
+            
             ReportTitle = report.ReportTitle;
             ReportDescription = report.ReportDescription;
             Location = report.Location;

@@ -1,11 +1,8 @@
 ﻿using OlycksRapporteringV2.Application.Interfaces;
 using OlycksRapporteringV2.Application.Services;
 using OlycksRapporteringV2.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Input;
 using MauiApp = Microsoft.Maui.Controls.Application;
 
@@ -16,7 +13,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         private readonly IUserRepository _repo;
 
-        // ── Fältvärden ────────────────────────────────────────────────
+        
 
         private string employeeId;
         public string EmployeeId { get => employeeId; set { employeeId = value; OnPropertyChanged(); } }
@@ -48,7 +45,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         private string contactPerson2PhoneNumber;
         public string ContactPerson2PhoneNumber { get => contactPerson2PhoneNumber; set { contactPerson2PhoneNumber = value; OnPropertyChanged(); } }
 
-        // ── ReadOnly/Editing-lägen ────────────────────────────────────
+        
 
         private bool employeeIdReadOnly = true;
         public bool EmployeeIdReadOnly { get => employeeIdReadOnly; set { employeeIdReadOnly = value; OnPropertyChanged(); OnPropertyChanged(nameof(EmployeeIdEditing)); } }
@@ -90,7 +87,6 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public bool ContactPerson2PhoneReadOnly { get => contactPerson2PhoneReadOnly; set { contactPerson2PhoneReadOnly = value; OnPropertyChanged(); OnPropertyChanged(nameof(ContactPerson2PhoneEditing)); } }
         public bool ContactPerson2PhoneEditing => !contactPerson2PhoneReadOnly;
 
-        // ── Save per fält (stänger edit-läge) ────────────────────────
 
         public ICommand SaveEmployeeIdCommand => new Command(() => EmployeeIdReadOnly = true);
         public ICommand SaveEmailCommand => new Command(() => EmailReadOnly = true);
@@ -103,7 +99,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public ICommand SaveContactPerson2Command => new Command(() => ContactPerson2ReadOnly = true);
         public ICommand SaveContactPerson2PhoneCommand => new Command(() => ContactPerson2PhoneReadOnly = true);
 
-        // ── Spara allt till databasen ─────────────────────────────────
+       
 
         public ICommand SaveAllCommand => new Command(async () =>
         {
@@ -119,12 +115,12 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             user.ContactPerson2PhoneNumber = ContactPerson2PhoneNumber;
 
             await _repo.UpdateUser(user);
-            UserSession.Instance.StartSession(user); // uppdatera sessionen
+            UserSession.Instance.StartSession(user); 
 
             await MauiApp.Current.MainPage.DisplayAlert("Sparat", "Dina uppgifter har uppdaterats.", "OK");
         });
 
-        // ── ToggleEdit ────────────────────────────────────────────────
+        
 
         public void ToggleEdit(string field)
         {
@@ -143,7 +139,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             }
         }
 
-        // ── Konstruktor ───────────────────────────────────────────────
+        
 
         public ShowAccountViewModel()
         {

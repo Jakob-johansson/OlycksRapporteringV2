@@ -1,13 +1,9 @@
-﻿using BCrypt.Net;
-using OlycksRapporteringV2.Application.Interfaces;
+﻿using OlycksRapporteringV2.Application.Interfaces;
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Domain.Enums;
 using OlycksRapporteringV2.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Input;
 using MauiApp = Microsoft.Maui.Controls.Application;
 

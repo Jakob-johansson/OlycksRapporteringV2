@@ -21,7 +21,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
 
 
 
-        //RAPPORTEN\\
+     
         private Report _report;
         public Report Report
         {

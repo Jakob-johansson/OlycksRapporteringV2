@@ -158,7 +158,53 @@
                                FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
                                HorizontalOptions="End" VerticalOptions="Center"/>
                     </Grid>
+                    <!-- ═══ VÄDER VID OLYCKAN ═══ -->
+                    <Label Text="VÄDER VID OLYCKAN" FontSize="11" FontAttributes="Bold"
+       TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16"/>
 
+                    <Border StrokeShape="RoundRectangle 14" Stroke="#2A2D38"
+        BackgroundColor="#1A1D27" Padding="20,8" Margin="0,0,0,24">
+                        <VerticalStackLayout Spacing="0">
+
+                            <!-- Plats -->
+                            <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                                <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                                <Label Text="Plats" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding Report.WeatherLocation}"
+                   FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                   HorizontalOptions="End" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <!-- Väder -->
+                            <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                                <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                                <Label Text="Väder" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding Report.WeatherDescription}"
+                   FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                   HorizontalOptions="End" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <!-- Temperatur -->
+                            <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                                <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="#2A2D38" VerticalOptions="End"/>
+                                <Label Text="Temperatur" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                                <Label Grid.Column="1"
+                   Text="{Binding Report.Temperature, StringFormat='{0:F1}°C'}"
+                   FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                   HorizontalOptions="End" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <!-- Vindhastighet -->
+                            <Grid ColumnDefinitions="*, *" Padding="0,14" MinimumHeightRequest="48">
+                                <Label Text="Vindhastighet" FontSize="13" TextColor="#8A8F9E" VerticalOptions="Center"/>
+                                <Label Grid.Column="1"
+                   Text="{Binding Report.WindSpeed, StringFormat='{0:F1} km/h'}"
+                   FontSize="13" FontAttributes="Bold" TextColor="#F0F0F0"
+                   HorizontalOptions="End" VerticalOptions="Center"/>
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
                 </VerticalStackLayout>
             </Border>
 
