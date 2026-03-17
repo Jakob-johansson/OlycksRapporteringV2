@@ -3,6 +3,7 @@ using OlycksRapporteringV2.Application.Services;
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Domain.Enums;
 using OlycksRapporteringV2.Infrastructure.Repositories;
+using OlycksRapporteringV2.MAUI.Services;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -13,7 +14,12 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
     public class AdminReportDetailPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private readonly IReportRepository _repo;
+        //Design patter: Facade
+        //Här använder vi ReportService.cs för att denna klass inte behöver känna till alla Repositories.
+        private readonly ReportService _reportService;
+        
+
+
 
         //RAPPORTEN\\
         private Report _report;
@@ -34,7 +40,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         //KONSTRUKTOR\\
         public AdminReportDetailPageViewModel(Report report)
         {
-            _repo = new ReportRepositoryDb();
+            _reportService = new ReportService();
             Report = report;
             ActiveStatus = report.Status;
         }
@@ -42,7 +48,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         //SÄTT STATUS\\
         public async Task SetStatus(ReportStatus status)
         {
-            await _repo.UpdateReportStatus(Report.Id, status);
+            await _reportService.UpdateReportStatus(Report.Id, status);
             Report.Status = status;
             ActiveStatus = status;
             OnPropertyChanged(nameof(Report));

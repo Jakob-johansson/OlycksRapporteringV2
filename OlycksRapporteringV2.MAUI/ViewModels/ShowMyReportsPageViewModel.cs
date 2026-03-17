@@ -45,7 +45,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         //HÄMTA RAPPORTER FRÅN DATABASEN\\
         public async Task LoadReports()
         {
-            var reports = await _repo.GetReportByUserId(UserSession.CurrentUser.Id);
+            var reports = await _repo.GetReportByUserId(UserSession.Instance.CurrentUser.Id);
             Reports.Clear();
             foreach (var report in reports)
                 Reports.Add(new SelectableReport { Report = report });
@@ -85,10 +85,10 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             var notification = new Notification
             {
                 Id = Guid.NewGuid().ToString(),
-                FromUserId = UserSession.CurrentUser.EmployeeId,
+                FromUserId = UserSession.Instance.CurrentUser.EmployeeId,
                 ReportId = report.Id,
                 ReportTitle = report.ReportTitle,
-                Message = $"{UserSession.CurrentUser.EmployeeId} begär att få ändra rapporten: {report.ReportTitle}",
+                Message = $"{UserSession.Instance.CurrentUser.EmployeeId} begär att få ändra rapporten: {report.ReportTitle}",
                 CreatedAt = DateTime.Now,
                 IsRead = false
             };

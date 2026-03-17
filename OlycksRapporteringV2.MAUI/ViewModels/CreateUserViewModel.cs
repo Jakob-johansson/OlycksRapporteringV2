@@ -1,4 +1,5 @@
 ﻿using BCrypt.Net;
+using OlycksRapporteringV2.Application.Interfaces;
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Domain.Enums;
 using OlycksRapporteringV2.Infrastructure.Repositories;
@@ -14,7 +15,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
 {
     public class CreateUserViewModel : INotifyPropertyChanged
     {
-        private readonly UserRepositoryDb _repo;
+        private readonly IUserRepository _repo;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

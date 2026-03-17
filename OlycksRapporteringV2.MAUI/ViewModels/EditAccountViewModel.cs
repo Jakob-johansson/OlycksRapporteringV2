@@ -123,7 +123,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public EditAccountViewModel()
         {
             // Fyll i från inloggad användare
-            var user = UserSession.CurrentUser;
+            var user = UserSession.Instance.CurrentUser;
             if (user != null)
             {
                 EmployeeId = user.EmployeeId;

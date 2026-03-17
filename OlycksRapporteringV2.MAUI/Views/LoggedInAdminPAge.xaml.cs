@@ -18,7 +18,7 @@ public partial class LoggedInAdminPage : ContentPage
         bool confirm = await DisplayAlert("Logga ut", "Är du säker?", "Ja", "Avbryt");
         if (confirm)
         {
-            UserSession.EndSession();
+            UserSession.Instance.EndSession();
             MauiApp.Current.MainPage = new NavigationPage(new MainPage());
         }
     }

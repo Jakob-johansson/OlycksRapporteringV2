@@ -107,7 +107,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
 
         public ICommand SaveAllCommand => new Command(async () =>
         {
-            var user = UserSession.CurrentUser;
+            var user = UserSession.Instance.CurrentUser;
             user.EmployeeId = EmployeeId;
             user.Email = Email;
             user.PhoneNumber = PhoneNumber;
@@ -119,7 +119,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             user.ContactPerson2PhoneNumber = ContactPerson2PhoneNumber;
 
             await _repo.UpdateUser(user);
-            UserSession.StartSession(user); // uppdatera sessionen
+            UserSession.Instance.StartSession(user); // uppdatera sessionen
 
             await MauiApp.Current.MainPage.DisplayAlert("Sparat", "Dina uppgifter har uppdaterats.", "OK");
         });
@@ -148,7 +148,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public ShowAccountViewModel()
         {
             _repo = new UserRepositoryDb();
-            var user = UserSession.CurrentUser;
+            var user = UserSession.Instance.CurrentUser;
             if (user != null)
             {
                 EmployeeId = user.EmployeeId;

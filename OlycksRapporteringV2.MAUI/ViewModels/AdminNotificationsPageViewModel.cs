@@ -1,6 +1,8 @@
 ﻿using OlycksRapporteringV2.Application.Interfaces;
+using OlycksRapporteringV2.Application.Services;
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Infrastructure.Repositories;
+using OlycksRapporteringV2.MAUI.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,8 +12,12 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
     public class AdminNotificationsPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+        //Design pattern: Facade
+        //Här använder jag Facade för att den här klassen inte behöver känna till flera
+        //repositories. Då använder vi ReportService.cs som hanterar det istället.
+
+        private readonly ReportService _reportService;
         private readonly INotificationRepository _notificationRepo;
-        private readonly IReportRepository _reportRepo;
 
         //LISTOR\\
         public ObservableCollection<Notification> Notifications { get; set; } = new();
@@ -21,7 +27,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public AdminNotificationsPageViewModel()
         {
             _notificationRepo = new NotificationRepositoryDb();
-            _reportRepo = new ReportRepositoryDb();
+            _reportService = new ReportService();
         }
 
         //HÄMTA NOTISER\\
@@ -46,7 +52,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         //HÄMTA RAPPORT KOPPLAD TILL NOTIS\\
         public async Task<Report> GetReportForNotification(Notification notification)
         {
-            return await _reportRepo.GetReportById(notification.ReportId);
+            return await _reportService.GetReportById(notification.ReportId);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = null)

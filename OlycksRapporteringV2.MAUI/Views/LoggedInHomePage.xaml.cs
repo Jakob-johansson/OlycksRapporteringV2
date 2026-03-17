@@ -32,7 +32,7 @@ public partial class LoggedInHomePage : ContentPage
     private async void OnLogoutClicked(object sender, EventArgs e)
     {
         // Avsluta session
-        UserSession.EndSession();
+        UserSession.Instance.EndSession();
 
         // Gå tillbaka till login-sidan
         await Navigation.PushAsync(new MainPage());

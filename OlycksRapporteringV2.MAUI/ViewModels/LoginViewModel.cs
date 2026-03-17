@@ -84,7 +84,7 @@ public class LoginViewModel : INotifyPropertyChanged
         }
 
         // Starta session
-        UserSession.StartSession(user);
+        UserSession.Instance.StartSession(user);
 
         await Application.Current.MainPage.DisplayAlert(
             "Success",

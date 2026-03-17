@@ -3,6 +3,7 @@ using OlycksRapporteringV2.Application.Services;
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Infrastructure.Repositories;
 using OlycksRapporteringV2.MAUI.Models;
+using OlycksRapporteringV2.MAUI.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -12,7 +13,13 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
     public class AdminShowAllReportsPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private readonly IReportRepository _repo;
+        //Design patter: Facade
+        //Här använder vi ReportService.cs för att hantera allting med repositories. 
+        //Då behöver inte den här klassen veta om allt det.
+
+
+
+        private readonly ReportService _reportService;
         private readonly IUserRepository _userRepo;
 
         //ALLA RAPPORTER (ANVÄNDS FÖR FILTRERING)\\
@@ -52,14 +59,14 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         //KONSTRUKTOR\\
         public AdminShowAllReportsPageViewModel()
         {
-            _repo = new ReportRepositoryDb();
+            _reportService = new ReportService();
             _userRepo = new UserRepositoryDb();
         }
 
         //HÄMTA ALLA RAPPORTER\\
         public async Task LoadReports()
         {
-            var reports = await _repo.GetAllReports();
+            var reports = await _reportService.GetAllReports();
             _allReports.Clear();
             foreach (var report in reports)
             {
@@ -85,7 +92,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             var toDelete = Reports.Where(r => r.IsSelected).ToList();
             foreach (var item in toDelete)
             {
-                await _repo.DeleteReport(item.Report.Id);
+                await _reportService.DeleteReport(item.Report.Id);
                 _allReports.Remove(item);
                 Reports.Remove(item);
             }

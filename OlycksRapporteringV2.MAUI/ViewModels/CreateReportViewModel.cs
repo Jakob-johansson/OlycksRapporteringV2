@@ -3,6 +3,7 @@ using OlycksRapporteringV2.Application.Services;
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Domain.Enums;
 using OlycksRapporteringV2.Infrastructure.Repositories;
+using OlycksRapporteringV2.MAUI.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,11 +18,11 @@ namespace OlycksRapporteringV2.MAUI.ViewModels;
 public class CreateReportViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
-    private readonly IReportRepository _repo;
+   
 
     //KONTROLLERAR OM NÅGOT FÄLLT ÄR FEL\\
     //---Skickar sedan ett felmeddelande---\\
-    public bool HasAnyError = false;
+    public bool HasAnyError => _errors.ContainsValue(true);
     //FELHANTERING DICTIONARY\\
     private Dictionary<string, bool> _errors = new();
 
@@ -175,9 +176,10 @@ public class CreateReportViewModel : INotifyPropertyChanged
     //KOMMANDO\\
     public ICommand CreateReportCommand { get; }
 
+    private readonly ReportService _reportService;
     public CreateReportViewModel()
     {
-        _repo = new ReportRepositoryDb();
+        _reportService = new ReportService();
         CreateReportCommand = new Command(async () => await CreateReport());
     }
 
@@ -228,17 +230,17 @@ public class CreateReportViewModel : INotifyPropertyChanged
             MaterialDamage = MaterialDamage,
             ImmediateActions = ImmediateActions,
             PreventiveActions = PreventiveActions,
-            CreatedByUserId = UserSession.CurrentUser.Id,
+            CreatedByUserId = UserSession.Instance.CurrentUser.Id,
             CreatedAt = DateTime.Now,
             Status = ReportStatus.Created,
             IsVisibleToUser = true,
-            Insurance = UserSession.CurrentUser.Insurance,
+            Insurance = UserSession.Instance.CurrentUser.Insurance,
             TimeOfAccident = TimeOfAccident,
             AffectedPersonType = SelectedAffectedPersonType
         };
-      
 
-        await _repo.CreateReport(report);
+        await _reportService.CreateReport(report);
+        
 
         await MauiApp.Current.MainPage.DisplayAlert("Success", "Rapport skapad!", "OK");
     }
