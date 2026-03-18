@@ -15,5 +15,9 @@ namespace OlycksRapporteringV2.Domain.Entities
         public string Message { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsRead { get; set; }
-    }
+
+        public string ToUserId { get; set; }
+        public string Status { get; set; }
+        public bool IsAdminNotification { get; set; }    
+    }              
 }

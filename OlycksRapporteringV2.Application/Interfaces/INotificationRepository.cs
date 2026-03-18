@@ -11,5 +11,13 @@ namespace OlycksRapporteringV2.Application.Interfaces
         Task<List<Notification>> GetAdminNotifications();
 
         Task MarkAsRead(string notificationId);
+
+        Task<List<Notification>> GetUserNotifications(string userId);
+        Task UpdateNotificationStatus(string notificationId, string status);
+
+        Task<Notification> GetPendingEditRequest(string reportId);
+
+        Task UpdateNotificationMessage(string notificationId, string message);
+
     }
 }

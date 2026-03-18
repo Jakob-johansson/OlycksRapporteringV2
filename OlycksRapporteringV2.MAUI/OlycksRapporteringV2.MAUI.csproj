@@ -89,9 +89,15 @@
 	  <Compile Update="Views\LoggedInAdminPage.xaml.cs">
 	    <DependentUpon>LoggedInAdminPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\UserNotificationPage.xaml.cs">
+	    <DependentUpon>UserNotificationPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\AdminArchivePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminNotificationsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -128,7 +134,7 @@
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\NotificationsPage.xaml">
+	  <MauiXaml Update="Views\UserNotificationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PortalPage.xaml">

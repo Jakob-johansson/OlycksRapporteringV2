@@ -31,11 +31,12 @@ public partial class LoggedInHomePage : ContentPage
 
     private async void OnLogoutClicked(object sender, EventArgs e)
     {
-        // Avsluta session
-        UserSession.Instance.EndSession();
-
-        // Gå tillbaka till login-sidan
-        await Navigation.PushAsync(new MainPage());
+        bool confirm = await DisplayAlertAsync("Logga ut", "Är du säker?", "Ja", "Avbryt");
+        if (confirm)
+        {
+            UserSession.Instance.EndSession();
+            MauiApp.Current.MainPage = new NavigationPage(new MainPage());
+        }
     }
 
     private async void OnClickedGoToCurrentEventsPage(object sender, EventArgs e)

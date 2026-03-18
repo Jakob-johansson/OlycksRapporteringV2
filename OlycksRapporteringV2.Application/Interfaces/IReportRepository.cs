@@ -20,6 +20,8 @@ namespace OlycksRapporteringV2.Application.Interfaces
         Task<Report> GetReportById(string id);
         Task<int> GetTotalReportCount();
         Task<int> GetReportCountByStatus(ReportStatus status);
+        Task ArchiveReport(string id);
+        Task<List<Report>> GetArchivedReports();
 
     }
 }

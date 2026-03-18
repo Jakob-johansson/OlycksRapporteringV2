@@ -2,90 +2,86 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:OlycksRapporteringV2.MAUI.Converters"
-             xmlns:entities="clr-namespace:OlycksRapporteringV2.Domain.Entities;assembly=OlycksRapporteringV2.Domain"
-             x:Class="OlycksRapporteringV2.MAUI.Views.AdminNotificationsPage"
+             x:Class="OlycksRapporteringV2.MAUI.Views.NotificationsPage"
              BackgroundColor="#0F1117">
 
     <ContentPage.Resources>
         <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto, Auto, *" Padding="20,50,20,20">
+    <ScrollView>
+        <VerticalStackLayout Padding="20,50,20,20" Spacing="0">
 
-        <!-- RUBRIK -->
-        <VerticalStackLayout Grid.Row="0" Spacing="6" Margin="0,0,0,20">
-            <Label Text="Notiser"
-                   FontSize="28" FontAttributes="Bold" TextColor="#F0F0F0"/>
-            <BoxView HeightRequest="3" WidthRequest="50" Color="#E83B3B" HorizontalOptions="Start"/>
-        </VerticalStackLayout>
+            <!-- RUBRIK -->
+            <VerticalStackLayout Spacing="6" Margin="0,0,0,20">
+                <Label Text="Meddelanden"
+                       FontSize="28" FontAttributes="Bold" TextColor="#F0F0F0"/>
+                <BoxView HeightRequest="3" WidthRequest="50" Color="#E83B3B" HorizontalOptions="Start"/>
+            </VerticalStackLayout>
 
-        <!-- TILLBAKA-KNAPP -->
-        <HorizontalStackLayout Grid.Row="1" Margin="0,0,0,20">
+            <!-- TILLBAKA-KNAPP -->
             <Border StrokeShape="RoundRectangle 10" Stroke="#2A2D38"
-                    BackgroundColor="#1A1D27" HeightRequest="42" Padding="14,0">
+                    BackgroundColor="#1A1D27" HeightRequest="42" Padding="14,0"
+                    HorizontalOptions="Start" Margin="0,0,0,20">
                 <Button Text="← Tillbaka" Clicked="OnBackClicked"
                         BackgroundColor="Transparent" TextColor="#E83B3B"
                         FontSize="13" FontAttributes="Bold" HeightRequest="42"/>
             </Border>
-        </HorizontalStackLayout>
 
-        <!-- TOM LISTA -->
-        <VerticalStackLayout Grid.Row="2"
-                             IsVisible="{Binding HasNoNotifications}"
-                             VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
-            <Label Text="Inga notiser just nu."
-                   FontSize="18" FontAttributes="Bold"
-                   TextColor="#F0F0F0" HorizontalOptions="Center"/>
-            <Label Text="Notiser från användare visas här."
-                   FontSize="14" TextColor="#8A8F9E" HorizontalOptions="Center"/>
-        </VerticalStackLayout>
+            <!-- TOM LISTA -->
+            <VerticalStackLayout IsVisible="{Binding HasNoNotifications}"
+                                 VerticalOptions="Center" HorizontalOptions="Center"
+                                 Spacing="8" Margin="0,40,0,0">
+                <Label Text="Inga meddelanden."
+                       FontSize="18" FontAttributes="Bold"
+                       TextColor="#F0F0F0" HorizontalOptions="Center"/>
+                <Label Text="Dina meddelanden visas här."
+                       FontSize="14" TextColor="#8A8F9E" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
 
-        <!-- NOTISLISTA -->
-        <CollectionView Grid.Row="2"
-                        IsVisible="{Binding HasNoNotifications, Converter={StaticResource InverseBoolConverter}}"
-                        ItemsSource="{Binding Notifications}"
-                        SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="0,0,0,10">
+            <!-- MEDDELANDELISTA -->
+            <VerticalStackLayout IsVisible="{Binding HasNoNotifications, Converter={StaticResource InverseBoolConverter}}"
+                                 Spacing="10"
+                                 BindableLayout.ItemsSource="{Binding Notifications}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
                         <Border StrokeShape="RoundRectangle 14"
                                 Stroke="#2A2D38"
                                 BackgroundColor="#1A1D27"
                                 Padding="16,14">
-
-                            <!-- Oläst = mörkröd bakgrund, läst = normal -->
-                           
-
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnNotificationTapped"/>
                             </Border.GestureRecognizers>
 
-                            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="12">
+                            <Grid ColumnDefinitions="Auto, *"
+                                  RowDefinitions="Auto, Auto, Auto"
+                                  ColumnSpacing="12">
 
                                 <!-- Ikon -->
                                 <Border Grid.Column="0" Grid.RowSpan="3"
-                                        WidthRequest="40" HeightRequest="40"
+                                        WidthRequest="44" HeightRequest="44"
                                         BackgroundColor="#E83B3B"
                                         StrokeShape="RoundRectangle 10"
                                         Stroke="Transparent"
                                         VerticalOptions="Center">
-                                    <Label Text="🔔" FontSize="20"
+                                    <Label Text="🔔" FontSize="22"
                                            HorizontalOptions="Center" VerticalOptions="Center"/>
                                 </Border>
 
-                                <!-- Från -->
+                                <!-- Rapporttitel -->
                                 <Label Grid.Row="0" Grid.Column="1"
-                                       Text="{Binding FromUserId, StringFormat='Från: {0}'}"
+                                       Text="{Binding ReportTitle, StringFormat='Rapport: {0}'}"
                                        FontSize="11" FontAttributes="Bold"
-                                       TextColor="#E83B3B" CharacterSpacing="1.2"/>
+                                       TextColor="#E83B3B" CharacterSpacing="0.5"/>
 
                                 <!-- Meddelande -->
                                 <Label Grid.Row="1" Grid.Column="1"
                                        Text="{Binding Message}"
                                        FontSize="14" FontAttributes="Bold"
-                                       TextColor="#F0F0F0" LineBreakMode="WordWrap"/>
+                                       TextColor="#F0F0F0" LineBreakMode="WordWrap"
+                                       Margin="0,4,0,4"/>
 
-                                <!-- Datum + oläst-badge -->
+                                <!-- Datum + NY-badge -->
                                 <HorizontalStackLayout Grid.Row="2" Grid.Column="1" Spacing="8">
                                     <Label Text="{Binding CreatedAt, StringFormat='{0:yyyy-MM-dd HH:mm}'}"
                                            FontSize="11" TextColor="#3A3D4A"/>
@@ -100,11 +96,11 @@
 
                             </Grid>
                         </Border>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
 
-    </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

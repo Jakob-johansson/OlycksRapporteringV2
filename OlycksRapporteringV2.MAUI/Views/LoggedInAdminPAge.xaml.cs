@@ -21,7 +21,7 @@ public partial class LoggedInAdminPage : ContentPage
     //LOGGA UT\\
     private async void OnLogoutClicked(object sender, EventArgs e)
     {
-        bool confirm = await DisplayAlert("Logga ut", "Är du säker?", "Ja", "Avbryt");
+        bool confirm = await DisplayAlertAsync("Logga ut", "Är du säker?", "Ja", "Avbryt");
         if (confirm)
         {
             UserSession.Instance.EndSession();
@@ -32,8 +32,7 @@ public partial class LoggedInAdminPage : ContentPage
     //RAPPORTHANTERING\\
     private async void OnApprovedReportsClicked(object sender, EventArgs e)
     {
-        // kommer när vi bygger godkända-sidan
-        await DisplayAlert("Kommer snart", "Godkända rapporter — under utveckling.", "OK");
+        await Navigation.PushAsync(new AdminShowAllReportsPage("Approved"));
     }
 
     private async void OnAllReportsClicked(object sender, EventArgs e)
@@ -43,7 +42,7 @@ public partial class LoggedInAdminPage : ContentPage
 
     private async void OnArchivedReportsClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Kommer snart", "Arkiv — under utveckling.", "OK");
+        await Navigation.PushAsync(new AdminArchivePage());
     }
 
     private async void OnMessagesClicked(object sender, EventArgs e)

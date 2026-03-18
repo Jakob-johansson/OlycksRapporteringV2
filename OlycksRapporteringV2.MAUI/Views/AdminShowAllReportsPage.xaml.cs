@@ -5,11 +5,11 @@ namespace OlycksRapporteringV2.MAUI.Views;
 
 public partial class AdminShowAllReportsPage : ContentPage
 {
-    public AdminShowAllReportsPage()
+    public AdminShowAllReportsPage(string filter = null)
     {
         InitializeComponent();
 
-        BindingContext = new AdminShowAllReportsPageViewModel();
+        BindingContext = new AdminShowAllReportsPageViewModel(filter);
     }
 
 
@@ -42,12 +42,12 @@ public partial class AdminShowAllReportsPage : ContentPage
 
     private async void OnSelectModeClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Status", "Sätt till: Created", "OK");
+        await DisplayAlertAsync("Status", "Sätt till: Created", "OK");
     }
 
     private async void OnDeleteSelectedClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Status", "Sätt till: Created", "OK");
+        await DisplayAlertAsync("Status", "Sätt till: Created", "OK");
     }
 
     private async void OnReportTapped(object sender, TappedEventArgs e)

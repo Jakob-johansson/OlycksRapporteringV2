@@ -29,7 +29,8 @@ namespace OlycksRapporteringV2.Infrastructure.Repositories
         }
         public async Task<List<Report>> GetAllReports()
         {
-            return await MongoDb.GetReportCollection().Find(_ => true).ToListAsync();
+            var filter = Builders<Report>.Filter.Eq(r => r.IsArchived, false);
+            return await MongoDb.GetReportCollection().Find(filter).ToListAsync();
         }
         public async Task UpdateReportStatus(string reportId, ReportStatus status)
         {
@@ -58,5 +59,17 @@ namespace OlycksRapporteringV2.Infrastructure.Repositories
             var filter = Builders<Report>.Filter.Eq(r => r.Status, status);
             return (int)await MongoDb.GetReportCollection().CountDocumentsAsync(filter);
         }
+        public async Task ArchiveReport(string id)
+        {
+            var filter = Builders<Report>.Filter.Eq(r => r.Id, id);
+            var update = Builders<Report>.Update.Set(r => r.IsArchived, true);
+            await MongoDb.GetReportCollection().UpdateOneAsync(filter, update);
+        }
+        public async Task<List<Report>> GetArchivedReports()
+        {
+            var filter = Builders<Report>.Filter.Eq(r => r.IsArchived, true);
+            return await MongoDb.GetReportCollection().Find(filter).ToListAsync();
+        }
+
     }
 }

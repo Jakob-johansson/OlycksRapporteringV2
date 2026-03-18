@@ -3,19 +3,19 @@ using OlycksRapporteringV2.MAUI.ViewModels;
 
 namespace OlycksRapporteringV2.MAUI.Views;
 
-public partial class AdminNotificationsPage : ContentPage
+public partial class NotificationsPage : ContentPage
 {
-    public AdminNotificationsPage()
+    public NotificationsPage()
     {
         InitializeComponent();
-        BindingContext = new AdminNotificationsPageViewModel();
+        BindingContext = new UserNotificationsPageViewModel();
     }
 
     //LADDA NOTISER VARJE GÅNG SIDAN VISAS\\
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await (BindingContext as AdminNotificationsPageViewModel).LoadNotifications();
+        await (BindingContext as UserNotificationsPageViewModel).LoadNotifications();
     }
 
     private async void OnBackClicked(object sender, EventArgs e) =>
@@ -24,7 +24,7 @@ public partial class AdminNotificationsPage : ContentPage
     //TRYCK PÅ EN NOTIS\\
     private async void OnNotificationTapped(object sender, TappedEventArgs e)
     {
-        var vm = BindingContext as AdminNotificationsPageViewModel;
+        var vm = BindingContext as UserNotificationsPageViewModel;
         var border = sender as Border;
         var notification = border?.BindingContext as Notification;
 
@@ -33,12 +33,5 @@ public partial class AdminNotificationsPage : ContentPage
         //MARKERA SOM LÄST\\
         if (!notification.IsRead)
             await vm.MarkAsRead(notification);
-
-        //HÄMTA RAPPORTEN OCH NAVIGERA TILL DETAILSIDA\\
-        var report = await vm.GetReportForNotification(notification);
-        if (report != null)
-            await Navigation.PushAsync(new AdminReportDetailPage(report));
-        else
-            await DisplayAlertAsync("Fel", "Rapporten hittades inte.", "OK");
     }
 }

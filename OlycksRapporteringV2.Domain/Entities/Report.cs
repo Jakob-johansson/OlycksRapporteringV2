@@ -28,7 +28,7 @@ namespace OlycksRapporteringV2.Domain.Entities
         public double? Temperature { get; set; }
         public double? WindSpeed { get; set; }
         public string? WeatherLocation { get; set; }
-
+        public bool IsArchived { get; set; }
 
     }
 }

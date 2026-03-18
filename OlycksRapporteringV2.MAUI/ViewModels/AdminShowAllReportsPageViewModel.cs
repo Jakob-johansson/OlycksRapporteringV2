@@ -57,12 +57,13 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         }
 
         //KONSTRUKTOR\\
-        public AdminShowAllReportsPageViewModel()
+        public AdminShowAllReportsPageViewModel(string startFilter = null)
         {
             _reportService = new ReportService();
             _userRepo = new UserRepositoryDb();
+            _startFilter = startFilter;
         }
-
+        private string _startFilter;
         //HÄMTA ALLA RAPPORTER\\
         public async Task LoadReports()
         {
@@ -77,7 +78,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
                     CreatedByName = user != null ? user.EmployeeId : "Okänd användare"
                 });
             }
-            ApplyFilter(null); // VISA ALLA FRÅN START\\
+            ApplyFilter(_startFilter); // VISA ALLA FRÅN START\\
         }
 
         //VÄXLA MARKERING\\

@@ -43,17 +43,38 @@ namespace OlycksRapporteringV2.MAUI.Services
 
         public async Task RequestEdit(Report report)
         {
-            var notification = new Notification
+            //NOTIS TILL ADMIN\\
+            var adminNotification = new Notification
             {
                 Id = Guid.NewGuid().ToString(),
                 FromUserId = UserSession.Instance.CurrentUser.EmployeeId,
+                ToUserId = "admin",
                 ReportId = report.Id,
                 ReportTitle = report.ReportTitle,
                 Message = $"{UserSession.Instance.CurrentUser.EmployeeId} begär att få ändra rapporten: {report.ReportTitle}",
                 CreatedAt = DateTime.Now,
-                IsRead = false
+                IsRead = false,
+                Status = "Pending",
+                IsAdminNotification = true
             };
-            await _notificationRepo.SendNotification(notification);
+
+            //NOTIS TILL ANVÄNDAREN SJÄLV\\
+            var userNotification = new Notification
+            {
+                Id = Guid.NewGuid().ToString(),
+                FromUserId = UserSession.Instance.CurrentUser.EmployeeId,
+                ToUserId = UserSession.Instance.CurrentUser.Id,
+                ReportId = report.Id,
+                ReportTitle = report.ReportTitle,
+                Message = $"Din förfrågan om att redigera rapporten '{report.ReportTitle}' väntar på svar.",
+                CreatedAt = DateTime.Now,
+                IsRead = false,
+                Status = "Pending",
+                IsAdminNotification = false
+            };
+
+            await _notificationRepo.SendNotification(adminNotification);
+            await _notificationRepo.SendNotification(userNotification);
         }
 
         public async Task UpdateStatus(string reportId, ReportStatus status)
@@ -79,6 +100,19 @@ namespace OlycksRapporteringV2.MAUI.Services
         public async Task<int> GetReportCountByStatus(ReportStatus status)
         {
             return await _reportRepo.GetReportCountByStatus(status);
+        }
+
+        public async Task ArchivedReport(string id)
+        {
+            await _reportRepo.ArchiveReport(id);
+        }
+        public async Task<List<Report>> GetArchivedReports()
+        {
+            return await _reportRepo.GetArchivedReports();
+        }
+        public async Task ArchiveReport(string id)
+        {
+            await _reportRepo.ArchiveReport(id);
         }
     }
 }

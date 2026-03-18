@@ -33,7 +33,7 @@ public partial class AdminReportDetailPage : ContentPage
         var vm = BindingContext as AdminReportDetailPageViewModel;
 
         //VÄLJ PRIORITET\\
-        var priority = await DisplayActionSheet(
+        var priority = await DisplayActionSheetAsync(
             "Välj prioritet",
             "Avbryt",
             null,
@@ -58,7 +58,7 @@ public partial class AdminReportDetailPage : ContentPage
         if (string.IsNullOrWhiteSpace(description)) return;
 
         //NOTIFIERA ALLA ELLER SPECIFIKA\\
-        var notifyChoice = await DisplayActionSheet(
+        var notifyChoice = await DisplayActionSheetAsync(
             "Vem ska se händelsen?",
             "Avbryt",
             null,
@@ -108,5 +108,17 @@ public partial class AdminReportDetailPage : ContentPage
             await DisplayAlertAsync("Fel", $"Kunde inte generera PDF: {ex.Message}", "OK");
         }
     }
+    private async void OnArchiveClicked(object sender, EventArgs e)
+    {
+        bool confirm = await DisplayAlertAsync(
+            "Arkivera",
+            "Är du säker på att du vill arkivera rapporten?",
+            "Ja", "Avbryt");
 
+        if (!confirm) return;
+
+        var vm = BindingContext as AdminReportDetailPageViewModel;
+        await vm.ArchiveReport();
+        await Navigation.PopAsync();
+    }
 }

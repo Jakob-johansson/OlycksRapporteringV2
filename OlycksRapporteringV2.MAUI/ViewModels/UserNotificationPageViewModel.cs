@@ -2,21 +2,15 @@
 using OlycksRapporteringV2.Application.Services;
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.Infrastructure.Repositories;
-using OlycksRapporteringV2.MAUI.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace OlycksRapporteringV2.MAUI.ViewModels
 {
-    public class AdminNotificationsPageViewModel : INotifyPropertyChanged
+    public class UserNotificationsPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        //Design pattern: Facade
-        //Här använder jag Facade för att den här klassen inte behöver känna till flera
-        //repositories. Då använder vi ReportService.cs som hanterar det istället.
-
-        private readonly ReportService _reportService;
         private readonly INotificationRepository _notificationRepo;
 
         //LISTOR\\
@@ -24,27 +18,25 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public bool HasNoNotifications => !Notifications.Any();
 
         //KONSTRUKTOR\\
-        public AdminNotificationsPageViewModel()
+        public UserNotificationsPageViewModel()
         {
             _notificationRepo = new NotificationRepositoryDb();
-            _reportService = new ReportService();
         }
 
-        //HÄMTA NOTISER\\
+        //HÄMTA ANVÄNDARENS NOTISER\\
         public async Task LoadNotifications()
         {
-            var notifications = await _notificationRepo.GetAdminNotifications();
-
-            System.Diagnostics.Debug.WriteLine($"Antal notiser hittade: {notifications?.Count ?? 0}");
-            
+            var notifications = await _notificationRepo.GetUserNotifications(
+                UserSession.Instance.CurrentUser.Id);
+            System.Diagnostics.Debug.WriteLine($"Användare ID: {UserSession.Instance.CurrentUser.Id}");
+            System.Diagnostics.Debug.WriteLine($"Antal användarnotiser: {notifications?.Count ?? 0}");
+            foreach (var n in notifications)
+                System.Diagnostics.Debug.WriteLine($"Notis: {n.Message}, ToUserId: {n.ToUserId}, IsAdmin: {n.IsAdminNotification}");
             Notifications.Clear();
             foreach (var notification in notifications)
                 Notifications.Add(notification);
 
             OnPropertyChanged(nameof(HasNoNotifications));
-            foreach (var n in notifications)
-                System.Diagnostics.Debug.WriteLine($"Notis: {n.Message}, IsAdmin: {n.IsAdminNotification}, IsRead: {n.IsRead}");
-            System.Diagnostics.Debug.WriteLine($"HasNoNotifications: {HasNoNotifications}");
         }
 
         //MARKERA SOM LÄST\\
@@ -53,12 +45,6 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             notification.IsRead = true;
             await _notificationRepo.MarkAsRead(notification.Id);
             OnPropertyChanged(nameof(Notifications));
-        }
-
-        //HÄMTA RAPPORT KOPPLAD TILL NOTIS\\
-        public async Task<Report> GetReportForNotification(Notification notification)
-        {
-            return await _reportService.GetReportById(notification.ReportId);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = null)

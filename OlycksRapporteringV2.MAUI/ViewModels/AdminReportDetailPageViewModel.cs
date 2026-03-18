@@ -19,6 +19,10 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         // känna till alla repositories direkt.
         private readonly ReportService _reportService;
         private readonly IIncidentRepository _incidentRepo;
+        private readonly NotificationRepositoryDb _notificationRepo;
+
+        public bool IsArchived => Report?.IsArchived ?? false;
+
 
         //RAPPORTEN\\
         private Report _report;
@@ -41,10 +45,16 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         {
             _reportService = new ReportService();
             _incidentRepo = new IncidentRepositoryDb();
+            _notificationRepo = new NotificationRepositoryDb();
             Report = report;
             ActiveStatus = report.Status;
         }
-
+        public async Task ArchiveReport()
+        {
+            await _reportService.ArchiveReport(Report.Id);
+            await MauiApp.Current.MainPage.DisplayAlertAsync(
+                "Arkiverad", "Rapporten har arkiverats.", "OK");
+        }
         //SÄTT STATUS\\
         public async Task SetStatus(ReportStatus status)
         {
@@ -52,7 +62,22 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             Report.Status = status;
             ActiveStatus = status;
             OnPropertyChanged(nameof(Report));
-            await MauiApp.Current.MainPage.DisplayAlert(
+
+            //UPPDATERA ANVÄNDARENS NOTIS\\
+            var notificationStatus = status == ReportStatus.Created ? "Approved" : "Denied";
+            var userNotification = await _notificationRepo.GetPendingEditRequest(Report.Id);
+
+            if (userNotification != null)
+            {
+                var newMessage = status == ReportStatus.Created
+                    ? $"✅ Admin godkände din förfrågan att redigera '{Report.ReportTitle}'"
+                    : $"❌ Admin nekade din förfrågan att redigera '{Report.ReportTitle}'";
+
+                await _notificationRepo.UpdateNotificationStatus(userNotification.Id, notificationStatus);
+                await _notificationRepo.UpdateNotificationMessage(userNotification.Id, newMessage);
+            }
+
+            await MauiApp.Current.MainPage.DisplayAlertAsync(
                 "Status uppdaterad",
                 $"Rapporten är nu markerad som: {status}",
                 "OK");
@@ -84,7 +109,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
 
             await _incidentRepo.CreateIncident(incident);
 
-            await MauiApp.Current.MainPage.DisplayAlert(
+            await MauiApp.Current.MainPage.DisplayAlertAsync(
                 "Godkänd",
                 $"Rapporten är godkänd och händelsen har skapats med prioritet: {priority}",
                 "OK");
@@ -93,4 +118,5 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
-}
+    
+    }
