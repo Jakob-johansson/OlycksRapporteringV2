@@ -9,4 +9,9 @@ public partial class CreateAccount : ContentPage
         InitializeComponent();
         BindingContext = new CreateUserViewModel();
     }
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

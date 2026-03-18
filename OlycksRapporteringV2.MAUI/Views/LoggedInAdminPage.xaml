@@ -90,16 +90,16 @@
                                HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Border>
                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                        <Label Text="Sätt rapportstatus" FontSize="15"
+                        <Label Text="Godkända rapporter" FontSize="15"
                                FontAttributes="Bold" TextColor="#F0F0F0"/>
-                        <Label Text="Ändra status på inkomna rapporter"
-                               FontSize="12" TextColor="#8A8F9E"/>
+                        <Label Text="Se och ladda ner godkända rapporter"
+                                FontSize="12" TextColor="#8A8F9E"/>
                     </VerticalStackLayout>
                     <Label Grid.Column="2" Text="›" FontSize="24"
                            TextColor="#E83B3B" VerticalOptions="Center"/>
                     <Button Grid.Column="0" Grid.ColumnSpan="3"
                             BackgroundColor="Transparent"
-                            Clicked="OnManageStatusClicked" HeightRequest="72"/>
+                            Clicked="OnApprovedReportsClicked" HeightRequest="72"/>
                 </Grid>
             </Border>
 

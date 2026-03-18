@@ -65,21 +65,20 @@ namespace OlycksRapporteringV2.MAUI.Services
         {
             return await _reportRepo.GetReportById(id);
         }
-        
-
-        public async Task UpdateReportStatus (string id, ReportStatus status)
-        {
-            await _reportRepo.UpdateReportStatus(id, status);
-        }
+       
 
         public async Task UpdateReport(Report report)
         {
             await _reportRepo.UpdateReport(report);
         }
-        public async Task SendEditRequest(Report report)
+        
+       public async Task <int> GetTotalReportCount()
         {
-            
+            return await _reportRepo.GetTotalReportCount();
         }
-      
+        public async Task<int> GetReportCountByStatus(ReportStatus status)
+        {
+            return await _reportRepo.GetReportCountByStatus(status);
+        }
     }
 }

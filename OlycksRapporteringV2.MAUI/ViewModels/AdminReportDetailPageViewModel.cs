@@ -6,7 +6,6 @@ using OlycksRapporteringV2.Infrastructure.Repositories;
 using OlycksRapporteringV2.MAUI.Services;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using MauiApp = Microsoft.Maui.Controls.Application;
 
 namespace OlycksRapporteringV2.MAUI.ViewModels
@@ -14,14 +13,14 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
     public class AdminReportDetailPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        //Design patter: Facade
-        //Här använder vi ReportService.cs för att denna klass inte behöver känna till alla Repositories.
+
+        // DESIGN PATTERN: FACADE
+        // Använder ReportService så denna klass inte behöver
+        // känna till alla repositories direkt.
         private readonly ReportService _reportService;
-        
+        private readonly IIncidentRepository _incidentRepo;
 
-
-
-     
+        //RAPPORTEN\\
         private Report _report;
         public Report Report
         {
@@ -29,7 +28,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             set { _report = value; OnPropertyChanged(); }
         }
 
-        //AKTIV STATUS (FÖR ATT MARKERA VALD KNAPP)\\
+        //AKTIV STATUS\\
         private ReportStatus _activeStatus;
         public ReportStatus ActiveStatus
         {
@@ -37,10 +36,11 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
             set { _activeStatus = value; OnPropertyChanged(); }
         }
 
-        //KONSTRUKTOR\\
+        
         public AdminReportDetailPageViewModel(Report report)
         {
             _reportService = new ReportService();
+            _incidentRepo = new IncidentRepositoryDb();
             Report = report;
             ActiveStatus = report.Status;
         }
@@ -48,13 +48,45 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         //SÄTT STATUS\\
         public async Task SetStatus(ReportStatus status)
         {
-            await _reportService.UpdateReportStatus(Report.Id, status);
+            await _reportService.UpdateStatus(Report.Id, status);
             Report.Status = status;
             ActiveStatus = status;
             OnPropertyChanged(nameof(Report));
             await MauiApp.Current.MainPage.DisplayAlert(
                 "Status uppdaterad",
                 $"Rapporten är nu markerad som: {status}",
+                "OK");
+        }
+
+        //GODKÄNN RAPPORT OCH SKAPA HÄNDELSE\\
+        public async Task ApproveWithIncident(Priority priority, string title, string description, bool notifyAll)
+        {
+            //UPPDATERA RAPPORTSTATUS\\
+            await _reportService.UpdateStatus(Report.Id, ReportStatus.Approved);
+            Report.Status = ReportStatus.Approved;
+            Report.PriorityLevel = priority;
+            ActiveStatus = ReportStatus.Approved;
+            OnPropertyChanged(nameof(Report));
+
+            //SKAPA HÄNDELSE\\
+            var incident = new Incident
+            {
+                Id = Guid.NewGuid().ToString(),
+                Title = title,
+                Description = description,
+                Priority = priority,
+                CreatedAt = DateTime.Now,
+                CreatedByAdminId = UserSession.Instance.CurrentUser.EmployeeId,
+                LinkedReportId = Report.Id,
+                IsActive = true,
+                NotifyAll = notifyAll
+            };
+
+            await _incidentRepo.CreateIncident(incident);
+
+            await MauiApp.Current.MainPage.DisplayAlert(
+                "Godkänd",
+                $"Rapporten är godkänd och händelsen har skapats med prioritet: {priority}",
                 "OK");
         }
 

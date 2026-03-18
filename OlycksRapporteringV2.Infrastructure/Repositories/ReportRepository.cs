@@ -48,5 +48,15 @@ namespace OlycksRapporteringV2.Infrastructure.Repositories
             var filter = Builders<Report>.Filter.Eq(r => r.Id, id);
             return await MongoDb.GetReportCollection().Find(filter).FirstOrDefaultAsync();
         }
+        public async Task<int> GetTotalReportCount()
+        {
+            return (int)await MongoDb.GetReportCollection().CountDocumentsAsync(_ => true);
+
+        }
+        public async Task<int>GetReportCountByStatus(ReportStatus status)
+        {
+            var filter = Builders<Report>.Filter.Eq(r => r.Status, status);
+            return (int)await MongoDb.GetReportCollection().CountDocumentsAsync(filter);
+        }
     }
 }

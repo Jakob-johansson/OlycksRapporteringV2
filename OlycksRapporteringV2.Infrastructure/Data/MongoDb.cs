@@ -26,6 +26,9 @@ namespace OlycksRapporteringV2.Infrastructure.Data
             return _database.GetCollection<Notification>("Notifications");
         }
 
-
+        public static IMongoCollection<Incident> GetIncidentCollection()
+        {
+            return _database.GetCollection<Incident>("Incidents");
+        }
     }
 }

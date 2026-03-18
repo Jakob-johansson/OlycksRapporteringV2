@@ -122,7 +122,7 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnReportTapped"/>
                             </Border.GestureRecognizers>
-                            <Grid  ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto">
+                            <Grid  ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto, Auto">
 
                                 <!-- Status -->
                                 <Label Grid.Row="0" Grid.Column="0"
@@ -161,7 +161,17 @@
                                            
                                           />
                                 </HorizontalStackLayout>
-
+                                <!-- Ladda ner knapp -->
+                                        <Button Grid.Row="3" Grid.Column="0"
+                                        Text="Ladda ner som PDF"
+                                        Clicked="OnDownloadPdfClicked"
+                                        BackgroundColor="#1A1D27"
+                                        TextColor="#F0F0F0"
+                                        FontSize="11"
+                                        HeightRequest="32"
+                                        CornerRadius="8"
+                                        HorizontalOptions="Start"
+                                        Margin="0,8,0,0"/>      
                             </Grid>
                         </Border>
                     </Grid>

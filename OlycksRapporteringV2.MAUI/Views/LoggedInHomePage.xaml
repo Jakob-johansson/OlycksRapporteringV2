@@ -188,7 +188,29 @@
                                 HeightRequest="72"/>
                     </Grid>
                 </Border>
-
+                <Border StrokeShape="RoundRectangle 14" Stroke="#2A2D38"
+                        BackgroundColor="#1A1D27" Margin="0,0,0,14" HeightRequest="72" WidthRequest="300" HorizontalOptions="Start">
+                    <Grid ColumnDefinitions="Auto, *, Auto" Padding="20,0">
+                        <Border Grid.Column="0" WidthRequest="40" HeightRequest="40"
+                                BackgroundColor="#E83B3B" StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent" VerticalOptions="Center">
+                            <Label Text="⚠️" FontSize="20"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Margin="14,0,0,0"
+                                             VerticalOptions="Center" Spacing="2">
+                            <Label Text="Aktuella händelser" FontSize="16"
+                                     FontAttributes="Bold" TextColor="#F0F0F0"/>
+                            <Label Text="Se aktiva händelser och varningar"
+                                   FontSize="12" TextColor="#8A8F9E"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="›" FontSize="24"
+                               TextColor="#E83B3B" VerticalOptions="Center"/>
+                                    <Button Grid.Column="0" Grid.ColumnSpan="3"
+                                            BackgroundColor="Transparent"
+                                            Clicked="OnClickedGoToCurrentEventsPage" HeightRequest="72"/>   
+                    </Grid>
+                </Border>
                 <!-- Mitt konto -->
                 <Border StrokeShape="RoundRectangle 14"
                         Stroke="#2A2D38"

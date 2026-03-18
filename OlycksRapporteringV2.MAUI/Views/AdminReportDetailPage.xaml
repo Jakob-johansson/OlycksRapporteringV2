@@ -261,7 +261,20 @@
                 </Border>
 
             </Grid>
-
+            <!--Ladda ner PDF   -->
+            <Border StrokeShape="RoundRectangle 14"
+                        Stroke="#2A2D38"
+                        Background="#1A1D27"
+                        HeightRequest="56"
+                        Margin="0,10,0,40">
+                <Button Text="Ladda ner som PDF"
+                        Clicked="OnDownloadPdfClicked"
+                        Background="Transparent"
+                        TextColor="#F0F0F0"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        HeightRequest="56"/>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 

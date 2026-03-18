@@ -37,4 +37,9 @@ public partial class LoggedInHomePage : ContentPage
         // Gå tillbaka till login-sidan
         await Navigation.PushAsync(new MainPage());
     }
+
+    private async void OnClickedGoToCurrentEventsPage(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new CurrentEventsPage());
+    }
 }

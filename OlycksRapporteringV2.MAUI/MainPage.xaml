@@ -4,6 +4,7 @@
              x:Class="OlycksRapporteringV2.MAUI.MainPage">
 
     <ScrollView>
+        
         <Grid RowDefinitions="*, Auto"
               MinimumHeightRequest="700">
 
@@ -19,14 +20,18 @@
                         Margin="0,0,0,32"
                         BackgroundColor="#E83B3B"
                         StrokeShape="RoundRectangle 20"
-                        Stroke="Transparent">
-                    <Label Text="⚠"
+                        Stroke="Transparent"
+                        >
+                  
+                    <Label Text=""
                            FontSize="38"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
                            TextColor="White"/>
                 </Border>
-
+                <Image Source="Logotyp.png"
+       HeightRequest="120"
+       VerticalOptions="Center"/>
                 <!-- Rubrik -->
                 <Label Text="Olycks&#10;rapporteraren"
                        FontSize="42"

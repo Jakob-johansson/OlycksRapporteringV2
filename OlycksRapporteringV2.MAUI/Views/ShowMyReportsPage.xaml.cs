@@ -1,5 +1,6 @@
 using OlycksRapporteringV2.Domain.Entities;
 using OlycksRapporteringV2.MAUI.Models;
+using OlycksRapporteringV2.MAUI.Services;
 using OlycksRapporteringV2.MAUI.ViewModels;
 
 namespace OlycksRapporteringV2.MAUI.Views;
@@ -86,5 +87,28 @@ public partial class ShowMyReportsPage : ContentPage
             vm.ToggleSelection(item);
         else
             vm.SelectedReport = item.Report;
+    }
+
+    private async void OnDownloadPdfClicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        var item = button?.BindingContext as SelectableReport;
+
+        if (item == null) return;
+        var pdfService = new PdfService();
+        try
+        {
+            await DisplayAlertAsync("Genererar", "Skapar PDF...", "OK");
+            var path = await pdfService.SavePdf(item.Report);
+            await Launcher.OpenAsync(new OpenFileRequest
+            {
+                File = new ReadOnlyFile(path),
+                Title = "Öppna rapport"
+            });
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlertAsync("Fel", $"Kunde inte generera PDF: {ex.Message}", "OK");
+        }
     }
 }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:OlycksRapporteringV2.MAUI.Converters"
+             xmlns:entities="clr-namespace:OlycksRapporteringV2.Domain.Entities;assembly=OlycksRapporteringV2.Domain"
+             x:Class="OlycksRapporteringV2.MAUI.Views.CurrentEventsPage"
+             BackgroundColor="#0F1117">
+
+    <ContentPage.Resources>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, Auto, *" Padding="20,50,20,20">
+
+        <!-- RUBRIK -->
+        <VerticalStackLayout Grid.Row="0" Spacing="6" Margin="0,0,0,20">
+            <Label Text="Aktuella händelser"
+                   FontSize="28" FontAttributes="Bold" TextColor="#F0F0F0"/>
+            <BoxView HeightRequest="3" WidthRequest="50" Color="#E83B3B" HorizontalOptions="Start"/>
+        </VerticalStackLayout>
+
+        <!-- TILLBAKA-KNAPP -->
+        <HorizontalStackLayout Grid.Row="1" Margin="0,0,0,20">
+            <Border StrokeShape="RoundRectangle 10" Stroke="#2A2D38"
+                    BackgroundColor="#1A1D27" HeightRequest="42" Padding="14,0">
+                <Button Text="← Tillbaka" Clicked="OnBackClicked"
+                        BackgroundColor="Transparent" TextColor="#E83B3B"
+                        FontSize="13" FontAttributes="Bold" HeightRequest="42"/>
+            </Border>
+        </HorizontalStackLayout>
+
+        <!-- TOM LISTA -->
+        <VerticalStackLayout Grid.Row="2"
+                             IsVisible="{Binding HasNoIncidents}"
+                             VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+            <Label Text="Inga aktuella händelser."
+                   FontSize="18" FontAttributes="Bold"
+                   TextColor="#F0F0F0" HorizontalOptions="Center"/>
+            <Label Text="Det finns inga aktiva händelser just nu."
+                   FontSize="14" TextColor="#8A8F9E" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
+        <!-- HÄNDELSELISTA -->
+        <CollectionView Grid.Row="2"
+                        IsVisible="{Binding HasNoIncidents, Converter={StaticResource InverseBoolConverter}}"
+                        ItemsSource="{Binding Incidents}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="entities:Incident">
+                    <Grid Padding="0,0,0,12">
+                        <Border StrokeShape="RoundRectangle 14"
+                                Stroke="#2A2D38"
+                                BackgroundColor="#1A1D27"
+                                Padding="16,14">
+                            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="14">
+
+                                <!-- Prioritetsindikator -->
+                                <Border Grid.Column="0" Grid.RowSpan="3"
+                                        WidthRequest="6"
+                                        StrokeShape="RoundRectangle 3"
+                                        Stroke="Transparent"
+                                        VerticalOptions="Fill">
+                                    <Border.BackgroundColor>
+                                        <Binding Path="Priority">
+                                            <Binding.Converter>
+                                                <converters:PriorityColorConverter/>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Border.BackgroundColor>
+                                </Border>
+
+                                <!-- Prioritet-badge -->
+                                <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Spacing="8">
+                                    <Border StrokeShape="RoundRectangle 6"
+                                            Padding="8,3"
+                                            Stroke="Transparent">
+                                        <Border.BackgroundColor>
+                                            <Binding Path="Priority">
+                                                <Binding.Converter>
+                                                    <converters:PriorityColorConverter/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </Border.BackgroundColor>
+                                        <Label Text="{Binding Priority}"
+                                               FontSize="10" FontAttributes="Bold"
+                                               TextColor="White"/>
+                                    </Border>
+                                    <Label Text="{Binding CreatedAt, StringFormat='{0:yyyy-MM-dd HH:mm}'}"
+                                           FontSize="11" TextColor="#3A3D4A"
+                                           VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+
+                                <!-- Titel -->
+                                <Label Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding Title}"
+                                       FontSize="16" FontAttributes="Bold"
+                                       TextColor="#F0F0F0"
+                                       Margin="0,6,0,4"/>
+
+                                <!-- Beskrivning -->
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       Text="{Binding Description}"
+                                       FontSize="13" TextColor="#8A8F9E"
+                                       LineBreakMode="WordWrap"/>
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>
