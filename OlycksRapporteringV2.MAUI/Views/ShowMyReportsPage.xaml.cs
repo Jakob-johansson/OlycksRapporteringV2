@@ -83,10 +83,18 @@ public partial class ShowMyReportsPage : ContentPage
         var border = sender as Border;
         var item = border.BindingContext as SelectableReport;
 
+        if (item == null) return;
+
         if (vm.SelectModeActive)
             vm.ToggleSelection(item);
-        else
-            vm.SelectedReport = item.Report;
+        else 
+        {
+            if (vm.SelectedReport == item.Report)
+                vm.SelectedReport = null;
+            else
+                vm.SelectedReport = item.Report;
+        }
+            
     }
 
     private async void OnDownloadPdfClicked(object sender, EventArgs e)

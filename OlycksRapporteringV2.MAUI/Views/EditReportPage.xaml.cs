@@ -37,4 +37,9 @@ public partial class EditReportPage : ContentPage
 
     private void OnEditPreventiveClicked(object sender, TappedEventArgs e) =>
         (BindingContext as EditReportPageViewModel)?.ToggleEdit("Preventive");
+
+    private async void OnClickedGoBack(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

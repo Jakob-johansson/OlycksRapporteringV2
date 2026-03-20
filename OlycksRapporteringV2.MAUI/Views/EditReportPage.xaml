@@ -283,6 +283,7 @@
                     BackgroundColor="#E83B3B" HeightRequest="56" Margin="0,0,0,40">
                 <Button Text="Spara ändringar"
                         Command="{Binding SaveAllCommand}"
+                        Clicked="OnClickedGoBack"
                         BackgroundColor="Transparent" TextColor="White"
                         FontSize="16" FontAttributes="Bold"
                         HeightRequest="56" CornerRadius="14"/>

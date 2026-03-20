@@ -33,7 +33,22 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public Report SelectedReport
         {
             get => _selectedReport;
-            set { _selectedReport = value; OnPropertyChanged(); }
+            set 
+            {
+                var old = Reports.FirstOrDefault(r => r.IsSelectedForEdit);
+                if (old != null) old.IsSelectedForEdit = false;
+
+                _selectedReport = value; 
+                OnPropertyChanged(); 
+
+                if(value != null)
+                {
+                    var item = Reports.FirstOrDefault(r => r.Report == value);
+                    if (item != null) item.IsSelectedForEdit = true;
+                }
+
+
+            }
         }
 
        

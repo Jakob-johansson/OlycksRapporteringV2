@@ -54,7 +54,7 @@ namespace OlycksRapporteringV2.MAUI.Services
         {
             try
             {
-                //PARSA DATUMET FRÅN RAPPORTEN\\
+                
                 var formats = new[] { "yyyy-MM-dd HH:mm", "yyyyMMdd HH:mm", "d/M-yy HH:mm" };
                 if (!DateTime.TryParseExact(dateTimeString?.Trim(), formats,
                     System.Globalization.CultureInfo.InvariantCulture,
@@ -62,7 +62,7 @@ namespace OlycksRapporteringV2.MAUI.Services
                     out DateTime accidentDate))
                     return null;
 
-                //HÄMTA KOORDINATER\\
+                
                 var coords = await GetCoordinates(location);
                 if (coords == null) return null;
 

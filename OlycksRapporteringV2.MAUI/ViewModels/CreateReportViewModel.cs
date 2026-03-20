@@ -265,7 +265,7 @@ public class CreateReportViewModel : INotifyPropertyChanged
         await _reportService.CreateReport(report);
         
 
-        await MauiApp.Current.MainPage.DisplayAlertAsync("Success", "Rapport skapad!", "OK");
+        await MauiApp.Current.MainPage.DisplayAlert("Success", "Rapport skapad!", "OK");
     }
 
     //NOTIFIERING AV ÄNDRINGAR\\

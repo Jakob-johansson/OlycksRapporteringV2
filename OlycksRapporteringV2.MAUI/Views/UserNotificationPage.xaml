@@ -9,8 +9,8 @@
         <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20,50,20,20" Spacing="0">
+    <ScrollView BackgroundColor="Transparent">
+        <VerticalStackLayout Padding="20,50,20,20" Spacing="0" >
 
             <!-- RUBRIK -->
             <VerticalStackLayout Spacing="6" Margin="0,0,0,20">
@@ -39,10 +39,10 @@
                        FontSize="14" TextColor="#8A8F9E" HorizontalOptions="Center"/>
             </VerticalStackLayout>
 
-            <!-- MEDDELANDELISTA -->
+            <!-- MEDDELANDELISTA  -->
             <VerticalStackLayout IsVisible="{Binding HasNoNotifications, Converter={StaticResource InverseBoolConverter}}"
                                  Spacing="10"
-                                 BindableLayout.ItemsSource="{Binding Notifications}">
+                                 BindableLayout.ItemsSource="{Binding Notifications}" >
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Border StrokeShape="RoundRectangle 14"

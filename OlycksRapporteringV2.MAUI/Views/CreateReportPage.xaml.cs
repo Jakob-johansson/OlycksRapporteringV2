@@ -15,4 +15,9 @@ public partial class CreateReportPage : ContentPage
     {
         await Navigation.PopAsync();
     }
+
+    private async void OnClickedGoBack(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

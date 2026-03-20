@@ -21,7 +21,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         private readonly IIncidentRepository _incidentRepo;
         private readonly NotificationRepositoryDb _notificationRepo;
 
-        public bool IsArchived => Report?.IsArchived ?? false;
+        
 
 
         //RAPPORTEN\\
@@ -52,7 +52,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
         public async Task ArchiveReport()
         {
             await _reportService.ArchiveReport(Report.Id);
-            await MauiApp.Current.MainPage.DisplayAlertAsync(
+            await MauiApp.Current.MainPage.DisplayAlert(
                 "Arkiverad", "Rapporten har arkiverats.", "OK");
         }
         //SÄTT STATUS\\
@@ -77,7 +77,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
                 await _notificationRepo.UpdateNotificationMessage(userNotification.Id, newMessage);
             }
 
-            await MauiApp.Current.MainPage.DisplayAlertAsync(
+            await MauiApp.Current.MainPage.DisplayAlert(
                 "Status uppdaterad",
                 $"Rapporten är nu markerad som: {status}",
                 "OK");
@@ -109,7 +109,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
 
             await _incidentRepo.CreateIncident(incident);
 
-            await MauiApp.Current.MainPage.DisplayAlertAsync(
+            await MauiApp.Current.MainPage.DisplayAlert(
                 "Godkänd",
                 $"Rapporten är godkänd och händelsen har skapats med prioritet: {priority}",
                 "OK");

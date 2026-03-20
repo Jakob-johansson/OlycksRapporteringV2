@@ -173,6 +173,7 @@ namespace OlycksRapporteringV2.MAUI.ViewModels
 
             await _reportService.UpdateReport(_report);
             await MauiApp.Current.MainPage.DisplayAlert("Sparat", "Rapporten har uppdaterats.", "OK");
+            
         });
 
       

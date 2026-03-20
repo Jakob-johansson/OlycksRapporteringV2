@@ -159,42 +159,7 @@
 
             </VerticalStackLayout>
 
-            <!-- Sidfot -->
-            <VerticalStackLayout Grid.Row="1"
-                                 Padding="36,0,36,32"
-                                 Spacing="4">
-                <HorizontalStackLayout Spacing="8"
-                                       Margin="0,0,0,20">
-                    <Border BackgroundColor="#1A1D27"
-                            StrokeShape="RoundRectangle 8"
-                            Stroke="#2A2D38"
-                            Padding="10,6">
-                        <Label Text="🔒  Säker"
-                               FontSize="12"
-                               TextColor="#8A8F9E"/>
-                    </Border>
-                    <Border BackgroundColor="#1A1D27"
-                            StrokeShape="RoundRectangle 8"
-                            Stroke="#2A2D38"
-                            Padding="10,6">
-                        <Label Text="📋  GDPR"
-                               FontSize="12"
-                               TextColor="#8A8F9E"/>
-                    </Border>
-                    <Border BackgroundColor="#1A1D27"
-                            StrokeShape="RoundRectangle 8"
-                            Stroke="#2A2D38"
-                            Padding="10,6">
-                        <Label Text="⚡  Realtid"
-                               FontSize="12"
-                               TextColor="#8A8F9E"/>
-                    </Border>
-                </HorizontalStackLayout>
-                <Label Text="© 2025 OlycksRapporteraren"
-                       FontSize="12"
-                       TextColor="#3A3D4A"
-                       HorizontalOptions="Start"/>
-            </VerticalStackLayout>
+           
 
         </Grid>
     </ScrollView>

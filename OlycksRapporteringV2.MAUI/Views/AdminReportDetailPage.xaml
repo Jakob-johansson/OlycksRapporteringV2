@@ -210,10 +210,10 @@
 
             <!-- ═══ SÄTT STATUS ═══ -->
             <Label Text="SÄTT STATUS" FontSize="11" FontAttributes="Bold"
-                   TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16" IsVisible="{Binding IsArchived, Converter={StaticResource InverseBoolConverter}}"/>
+                   TextColor="#E83B3B" CharacterSpacing="1.5" Margin="0,0,0,16"/>
 
             <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto"
-      IsVisible="{Binding IsArchived, Converter={StaticResource InverseBoolConverter}}"
+     
                   ColumnSpacing="10" RowSpacing="10" Margin="0,0,0,40">
 
                 <!-- Created -->
@@ -260,7 +260,7 @@
                             BackgroundColor="Transparent" TextColor="#E83B3B"
                             FontSize="13" FontAttributes="Bold"/>
                 </Border>
-                <Border StrokeShape="RoundRectangle 14"
+                <Border Grid.Row="2" Grid.Column="1" StrokeShape="RoundRectangle 14"
         Stroke="#2A2D38"
         BackgroundColor="#1A1D27"
         HeightRequest="56"

@@ -114,7 +114,7 @@
                     <Grid Padding="0,0,0,8" >
                         <!-- Kortet -->
                         <Border  StrokeShape="RoundRectangle 12"
-                                Stroke="#2A2D38"
+                                Stroke="{Binding IsSelectedForEdit, Converter={StaticResource ErrorColorConverter}}"
                                 BackgroundColor="{Binding CardColor}"
                                 Padding="14,10"
                                 WidthRequest="400"

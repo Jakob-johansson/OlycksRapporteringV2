@@ -36,7 +36,7 @@ public partial class AdminArchivePage : ContentPage
 
         if (!valda.Any())
         {
-            await DisplayAlertAsync("Ingen vald", "Välj minst en rapport.", "OK");
+            await DisplayAlert("Ingen vald", "Välj minst en rapport.", "OK");
             return;
         }
 

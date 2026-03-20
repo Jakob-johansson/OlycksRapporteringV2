@@ -44,5 +44,22 @@ namespace OlycksRapporteringV2.MAUI.Models
             : Report.ReportDescription;
 
         public string CreatedByName { get; set; }
+
+        private bool _isSelectedForEdit;
+        public bool IsSelectedForEdit 
+        {
+            get => _isSelectedForEdit;
+            set
+            {
+                _isSelectedForEdit = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(EditSelectedColor));
+            } 
+        }
+        public Color EditSelectedColor => IsSelectedForEdit
+            ? Color.FromArgb("#1A2A1A")
+            : Color.FromArgb("1A1D27");
+
+
     }
 }
